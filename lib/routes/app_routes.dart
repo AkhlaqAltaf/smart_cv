@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smart_cv/form/cv_resume/init_cv_resume_form.dart';
 import '../presentation/splash_screen/splash_screen.dart';
 import '../presentation/cv_educations_screen/cv_educations_screen.dart';
 import '../presentation/signin_screen/signin_screen.dart';
@@ -30,9 +31,9 @@ class AppRoutes {
   static const String coverLetterScreen = '/cover_letter_screen';
 
   static const String appNavigationScreen = '/app_navigation_screen';
+  static const String cvResumeCreate = '/cv_resume_create';
 
   static Map<String, WidgetBuilder> routes = {
-
     splashScreen: (context) => SplashScreen(),
     signinScreen: (context) => SigninScreen(),
     signupScreen: (context) => SignupScreen(),
@@ -43,7 +44,6 @@ class AppRoutes {
     coverLetterScreen: (context) => CoverLetterScreen(),
     appNavigationScreen: (context) => AppNavigationScreen(),
     cvEducationsScreen: (context) => CvEducationsScreen(),
-
-    
+    cvResumeCreate: (context) => InitCVResumeForm(),
   };
 }

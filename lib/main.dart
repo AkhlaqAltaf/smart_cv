@@ -19,9 +19,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Sizer(
       builder: (context, orientation, deviceType) {
-        return
-        
-        MaterialApp(
+        return MaterialApp(
           theme: theme,
           title: 'smart_cv',
           debugShowCheckedModeBanner: false,

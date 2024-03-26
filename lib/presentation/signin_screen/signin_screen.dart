@@ -40,8 +40,11 @@ class SigninScreen extends StatelessWidget {
                                   horizontal: 16.h, vertical: 20.v))),
                       SizedBox(height: 28.v),
                       Padding(
+
                           padding: EdgeInsets.only(left: 23.h, right: 19.h),
-                          child: CustomTextFormField(
+                          child:
+                          
+                           CustomTextFormField(
                               // controller: passwordController,
                               hintText: "Password",
                               hintStyle: CustomTextStyles.bodyLargeGray800,
@@ -49,7 +52,9 @@ class SigninScreen extends StatelessWidget {
                               textInputType: TextInputType.visiblePassword,
                               obscureText: true,
                               contentPadding: EdgeInsets.symmetric(
-                                  horizontal: 16.h, vertical: 18.v))),
+                                  horizontal: 16.h, vertical: 18.v)
+                                  )
+                                  ),
                       SizedBox(height: 27.v),
                       CustomElevatedButton(
                           text: "Log IN",

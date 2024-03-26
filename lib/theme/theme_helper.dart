@@ -47,7 +47,7 @@ class ThemeHelper {
       visualDensity: VisualDensity.standard,
       colorScheme: colorScheme,
       textTheme: TextThemes.textTheme(colorScheme),
-      scaffoldBackgroundColor: colorScheme.onPrimaryContainer,
+      scaffoldBackgroundColor: Color.fromARGB(255, 206, 228, 225),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           shape: RoundedRectangleBorder(
