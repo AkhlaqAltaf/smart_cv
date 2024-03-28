@@ -1,3 +1,5 @@
+import 'package:flutter/widgets.dart';
+import 'package:smart_cv/form/cv_resume/init_cv_resume_form.dart';
 import 'package:smart_cv/widgets/appBar/custom_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_cv/core/app_export.dart';
@@ -31,11 +33,14 @@ class InvitationCardScreen extends StatelessWidget {
                                     style: theme.textTheme.headlineSmall))),
                         SizedBox(height: 52.v),
                         SizedBox(height: 157.v),
-                        CustomImageView(
-                            imagePath: ImageConstant.imgElegantGrandO,
-                            height: 429.v,
-                            width: 264.h,
-                            radius: BorderRadius.circular(20.h)),
+                        GestureDetector(
+                            child: CustomImageView(
+                                imagePath: ImageConstant.imgElegantGrandO,
+                                height: 429.v,
+                                width: 264.h,
+                                radius: BorderRadius.circular(20.h)),
+                            onTap: () => Navigator.pushNamed(
+                                context, AppRoutes.invitationCardCreate)),
                         SizedBox(height: 157.v),
                         CustomImageView(
                             imagePath: ImageConstant.imgClassicNewYea,
