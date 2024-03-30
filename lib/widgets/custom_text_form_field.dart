@@ -2,31 +2,32 @@ import 'package:flutter/material.dart';
 import '../core/app_export.dart';
 
 class CustomTextFormField extends StatelessWidget {
-  CustomTextFormField({
-    Key? key,
-    this.alignment,
-    this.width,
-    this.scrollPadding,
-    this.controller,
-    this.focusNode,
-    this.autofocus = true,
-    this.textStyle,
-    this.obscureText = false,
-    this.textInputAction = TextInputAction.next,
-    this.textInputType = TextInputType.text,
-    this.maxLines,
-    this.hintText,
-    this.hintStyle,
-    this.prefix,
-    this.prefixConstraints,
-    this.suffix,
-    this.suffixConstraints,
-    this.contentPadding,
-    this.borderDecoration,
-    this.fillColor,
-    this.filled = true,
-    this.validator,
-  }) : super(
+  CustomTextFormField(
+      {Key? key,
+      this.alignment,
+      this.width,
+      this.scrollPadding,
+      this.controller,
+      this.focusNode,
+      this.autofocus = true,
+      this.textStyle,
+      this.obscureText = false,
+      this.textInputAction = TextInputAction.next,
+      this.textInputType = TextInputType.text,
+      this.maxLines,
+      this.hintText,
+      this.hintStyle,
+      this.prefix,
+      this.prefixConstraints,
+      this.suffix,
+      this.suffixConstraints,
+      this.contentPadding,
+      this.borderDecoration,
+      this.fillColor,
+      this.filled = true,
+      this.validator,
+      this.onChange})
+      : super(
           key: key,
         );
 
@@ -37,13 +38,13 @@ class CustomTextFormField extends StatelessWidget {
   final TextEditingController? scrollPadding;
 
   final TextEditingController? controller;
+  final ValueChanged<String>? onChange;
 
   final FocusNode? focusNode;
 
   final bool? autofocus;
 
   final TextStyle? textStyle;
-
   final bool? obscureText;
 
   final TextInputAction? textInputAction;
@@ -84,6 +85,7 @@ class CustomTextFormField extends StatelessWidget {
         : textFormFieldWidget(context);
   }
 
+
   Widget textFormFieldWidget(BuildContext context) => SizedBox(
         width: width ?? double.maxFinite,
         child: TextFormField(
@@ -99,6 +101,7 @@ class CustomTextFormField extends StatelessWidget {
           maxLines: maxLines ?? 1,
           decoration: decoration,
           validator: validator,
+          onChanged: onChange,
         ),
       );
   InputDecoration get decoration => InputDecoration(

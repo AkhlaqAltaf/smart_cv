@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:smart_cv/core/app_export.dart';
-import 'package:smart_cv/theme/custom_text_style.dart';
 import 'package:smart_cv/widgets/custom_text_form_field.dart';
 
 class MessageDetailForm extends StatefulWidget {
