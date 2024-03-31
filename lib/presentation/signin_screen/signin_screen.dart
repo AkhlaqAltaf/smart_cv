@@ -1,3 +1,5 @@
+import 'package:provider/provider.dart';
+import 'package:smart_cv/provider/data_providers/auth_provider/signin_data_provider.dart';
 import 'package:smart_cv/widgets/custom_text_form_field.dart';
 import 'package:smart_cv/widgets/custom_elevated_button.dart';
 import 'package:flutter/material.dart';
@@ -22,75 +24,88 @@ class SigninScreen extends StatelessWidget {
                 key: _formKey,
                 child: SizedBox(
                     width: double.maxFinite,
-                    child: SingleChildScrollView(
-                        child: Column(children: [
-                      _buildWelcome(context),
-                      SizedBox(height: 26.v),
-                      Text("login your account",
-                          style: theme.textTheme.headlineLarge),
-                      SizedBox(height: 53.v),
-                      Padding(
-                          padding: EdgeInsets.only(left: 23.h, right: 19.h),
-                          child: CustomTextFormField(
-                              // controller: emailController,
-                              hintText: "Email",
-                              hintStyle: CustomTextStyles.bodyLargeGray800,
-                              textInputType: TextInputType.emailAddress,
-                              contentPadding: EdgeInsets.symmetric(
-                                  horizontal: 16.h, vertical: 20.v))),
-                      SizedBox(height: 28.v),
-                      Padding(
-
-                          padding: EdgeInsets.only(left: 23.h, right: 19.h),
-                          child:
-                          
-                           CustomTextFormField(
-                              // controller: passwordController,
-                              hintText: "Password",
-                              hintStyle: CustomTextStyles.bodyLargeGray800,
-                              textInputAction: TextInputAction.done,
-                              textInputType: TextInputType.visiblePassword,
-                              obscureText: true,
-                              contentPadding: EdgeInsets.symmetric(
-                                  horizontal: 16.h, vertical: 18.v)
-                                  )
-                                  ),
-                      SizedBox(height: 27.v),
-                      CustomElevatedButton(
-                          text: "Log IN",
-                          margin: EdgeInsets.only(left: 21.h, right: 22.h),
-                          buttonStyle: CustomButtonStyles.none,
-                          decoration: CustomButtonStyles
-                              .gradientPrimaryToTealDecoration,
-                          onPressed: () {
-                            onTapLogIN(context);
-                          }),
-                      SizedBox(height: 8.v),
-                      Align(
-                          alignment: Alignment.centerRight,
-                          child: Padding(
-                              padding: EdgeInsets.only(right: 9.h),
-                              child: Text("forget password?",
-                                  style: theme.textTheme.titleSmall))),
-                      SizedBox(height: 31.v),
-                      Align(
-                          alignment: Alignment.centerLeft,
-                          child: GestureDetector(
-                              onTap: () {
-                                onTapTxtIfYouHaveNot(context);
-                              },
-                              child: Padding(
-                                  padding: EdgeInsets.only(left: 45.h),
-                                  child: Text(
-                                      "If you have not any account signup.",
-                                      style: theme.textTheme.titleSmall)))),
-                      SizedBox(height: 46.v),
-                      CustomImageView(
-                          imagePath: ImageConstant.imgEllipse12,
-                          height: 215.v,
-                          width: 119.h,
-                          alignment: Alignment.centerLeft)
-                    ]))))));
+                    child: Consumer<SignInDataProvider>(
+                        builder: (context, value, child) =>
+                            SingleChildScrollView(
+                                child: Column(children: [
+                              _buildWelcome(context),
+                              SizedBox(height: 26.v),
+                              Text("login your account",
+                                  style: theme.textTheme.headlineLarge),
+                              SizedBox(height: 53.v),
+                              Padding(
+                                  padding:
+                                      EdgeInsets.only(left: 23.h, right: 19.h),
+                                  child: CustomTextFormField(
+                                      initialText: value.email,
+                                      onChange: (_value) {
+                                        value.email = _value;
+                                      },
+                                      // controller: emailController,
+                                      hintText: "Email",
+                                      hintStyle:
+                                          CustomTextStyles.bodyLargeGray800,
+                                      textInputType: TextInputType.emailAddress,
+                                      contentPadding: EdgeInsets.symmetric(
+                                          horizontal: 16.h, vertical: 20.v))),
+                              SizedBox(height: 28.v),
+                              Padding(
+                                  padding:
+                                      EdgeInsets.only(left: 23.h, right: 19.h),
+                                  child: CustomTextFormField(
+                                      initialText: value.password,
+                                      // controller: passwordController,
+                                      onChange: (_value) {
+                                        value.password = _value;
+                                      },
+                                      hintText: "Password",
+                                      hintStyle:
+                                          CustomTextStyles.bodyLargeGray800,
+                                      textInputAction: TextInputAction.done,
+                                      textInputType:
+                                          TextInputType.visiblePassword,
+                                      obscureText: true,
+                                      contentPadding: EdgeInsets.symmetric(
+                                          horizontal: 16.h, vertical: 18.v))),
+                              SizedBox(height: 27.v),
+                              CustomElevatedButton(
+                                  text: "Log IN",
+                                  margin:
+                                      EdgeInsets.only(left: 21.h, right: 22.h),
+                                  buttonStyle: CustomButtonStyles.none,
+                                  decoration: CustomButtonStyles
+                                      .gradientPrimaryToTealDecoration,
+                                  onPressed: () {
+                                    value.submit_data();
+                                    onTapLogIN(context);
+                                  }),
+                              SizedBox(height: 8.v),
+                              Align(
+                                  alignment: Alignment.centerRight,
+                                  child: Padding(
+                                      padding: EdgeInsets.only(right: 9.h),
+                                      child: Text("forget password?",
+                                          style: theme.textTheme.titleSmall))),
+                              SizedBox(height: 31.v),
+                              Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: GestureDetector(
+                                      onTap: () {
+                                        onTapTxtIfYouHaveNot(context);
+                                      },
+                                      child: Padding(
+                                          padding: EdgeInsets.only(left: 45.h),
+                                          child: Text(
+                                              "If you have not any account signup.",
+                                              style: theme
+                                                  .textTheme.titleSmall)))),
+                              SizedBox(height: 46.v),
+                              CustomImageView(
+                                  imagePath: ImageConstant.imgEllipse12,
+                                  height: 215.v,
+                                  width: 119.h,
+                                  alignment: Alignment.centerLeft)
+                            ])))))));
   }
 
   /// Section Widget

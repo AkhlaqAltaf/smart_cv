@@ -21,7 +21,6 @@ class CvEducationsScreen extends StatelessWidget {
             resizeToAvoidBottomInset: false,
             body: SizedBox(
                 width: double.maxFinite,
-                
                 child: SingleChildScrollView(
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -302,7 +301,6 @@ class CvEducationsScreen extends StatelessWidget {
   Widget _buildAustabbottabad(BuildContext context) {
     return CustomTextFormField(
         width: 245.h,
-        controller: austabbottabadController,
         hintText: "Aust abbottabad",
         alignment: Alignment.center,
         suffix: Container(
@@ -321,7 +319,6 @@ class CvEducationsScreen extends StatelessWidget {
   Widget _buildLocation(BuildContext context) {
     return CustomTextFormField(
         width: 245.h,
-        controller: locationController,
         hintText: "Abbottabad",
         alignment: Alignment.center,
         suffix: Container(
@@ -340,7 +337,6 @@ class CvEducationsScreen extends StatelessWidget {
   Widget _buildAssociateofscience(BuildContext context) {
     return CustomTextFormField(
         width: 245.h,
-        controller: associateofscienceController,
         hintText: "associate of science",
         alignment: Alignment.center,
         suffix: Container(
@@ -359,7 +355,6 @@ class CvEducationsScreen extends StatelessWidget {
   Widget _buildDate(BuildContext context) {
     return CustomTextFormField(
         width: 245.h,
-        controller: dateController,
         hintText: "month",
         textInputAction: TextInputAction.done,
         alignment: Alignment.center,

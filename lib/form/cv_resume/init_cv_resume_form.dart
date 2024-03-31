@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:smart_cv/form/cv_resume/header.dart';
 import 'package:smart_cv/provider/cv_form_provider.dart';
 
 class InitCVResumeForm extends StatefulWidget {
@@ -29,7 +30,7 @@ class _InitCVResumeFormState extends State<InitCVResumeForm> {
               ),
             ),
           ),
-          // CvResumeHeader(),
+          CvResumeHeader(),
         ],
       ),
     );

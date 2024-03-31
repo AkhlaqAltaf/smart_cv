@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import '../core/app_export.dart';
 
+// Class Text Feild
+
 class CustomTextFormField extends StatelessWidget {
   CustomTextFormField(
       {Key? key,
+      this.initialText,
       this.alignment,
       this.width,
       this.scrollPadding,
-      this.controller,
+      // this.controller,
       this.focusNode,
-      this.autofocus = true,
+      this.autofocus = false,
       this.textStyle,
       this.obscureText = false,
       this.textInputAction = TextInputAction.next,
@@ -31,52 +34,49 @@ class CustomTextFormField extends StatelessWidget {
           key: key,
         );
 
+// All Attributes Require For This TextField
+  final initialText;
+
   final Alignment? alignment;
-
   final double? width;
-
   final TextEditingController? scrollPadding;
-
-  final TextEditingController? controller;
+  // final TextEditingController? controller;
   final ValueChanged<String>? onChange;
-
   final FocusNode? focusNode;
-
   final bool? autofocus;
-
   final TextStyle? textStyle;
   final bool? obscureText;
-
   final TextInputAction? textInputAction;
-
   final TextInputType? textInputType;
-
   final int? maxLines;
-
   final String? hintText;
-
   final TextStyle? hintStyle;
-
   final Widget? prefix;
-
   final BoxConstraints? prefixConstraints;
-
   final Widget? suffix;
-
   final BoxConstraints? suffixConstraints;
-
   final EdgeInsets? contentPadding;
-
   final InputBorder? borderDecoration;
-
   final Color? fillColor;
-
   final bool? filled;
-
   final FormFieldValidator<String>? validator;
+
+  void _onFocusOut() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      FocusManager.instance.primaryFocus?.unfocus();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    var focusNode = this.focusNode ?? FocusNode();
+    focusNode.addListener(() {
+      if (!focusNode.hasFocus) {
+        // Call your method when the focus is removed from the text field
+        _onFocusOut();
+      }
+    });
+
     return alignment != null
         ? Align(
             alignment: alignment ?? Alignment.center,
@@ -85,13 +85,16 @@ class CustomTextFormField extends StatelessWidget {
         : textFormFieldWidget(context);
   }
 
-
   Widget textFormFieldWidget(BuildContext context) => SizedBox(
         width: width ?? double.maxFinite,
+
+        // Original TextField
+
         child: TextFormField(
           scrollPadding:
               EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-          controller: controller,
+          // controller: controller,
+          initialValue: initialText ?? "",
           focusNode: focusNode ?? FocusNode(),
           autofocus: autofocus!,
           style: textStyle ?? theme.textTheme.bodyMedium,
@@ -104,6 +107,7 @@ class CustomTextFormField extends StatelessWidget {
           onChanged: onChange,
         ),
       );
+
   InputDecoration get decoration => InputDecoration(
         hintText: hintText ?? "",
         hintStyle: hintStyle ?? CustomTextStyles.bodyLargeOnPrimary,

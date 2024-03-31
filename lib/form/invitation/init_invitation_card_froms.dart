@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:smart_cv/form/invitation/event_detail.dart';
-import 'package:smart_cv/form/invitation/host_detail.dart';
+
 import 'package:smart_cv/form/invitation/invitation_header.dart';
-import 'package:smart_cv/form/invitation/message.dart';
 import 'package:smart_cv/provider/invitation_card_form_provider.dart';
 
 class InitInvitationCardForm extends StatefulWidget {
