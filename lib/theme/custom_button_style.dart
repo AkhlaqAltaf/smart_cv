@@ -26,6 +26,22 @@ class CustomButtonStyles {
           ],
         ),
       );
+
+  static BoxDecoration get diabledButtonStyle => BoxDecoration(
+        color: Colors.grey,
+        borderRadius: BorderRadius.circular(20.h),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey,
+            spreadRadius: 2.h,
+            blurRadius: 2.h,
+            offset: Offset(
+              0,
+              4,
+            ),
+          ),
+        ],
+      );
   // text button style
   static ButtonStyle get none => ButtonStyle(
         backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),

@@ -1,16 +1,49 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localized_locales/flutter_localized_locales.dart';
+import 'package:intl/intl.dart';
 import 'package:multi_dropdown/multiselect_dropdown.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_cv/core/app_export.dart';
+import 'package:smart_cv/form/cv_resume/list_forms.dart';
+import 'package:smart_cv/provider/cv_form_provider.dart';
 import 'package:smart_cv/provider/data_providers/cv_resume_data_provider/personal_info_data_provider.dart';
 import 'package:smart_cv/widgets/custom_text_form_field.dart';
 
-class PersonalDetailForm extends StatelessWidget {
+class PersonalDetailForm extends StatefulWidget {
+  const PersonalDetailForm({Key? key}) : super(key: key);
+
+  @override
+  State<PersonalDetailForm> createState() => _PersonalDetailFormState();
+}
+
+class _PersonalDetailFormState extends State<PersonalDetailForm> {
+  TextEditingController _dateController = TextEditingController();
+  DateTime? selectedDate;
+
+  @override
+  void dispose() {
+    _dateController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: selectedDate ?? DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime.now(),
+    );
+    if (picked != null && picked != selectedDate) {
+      setState(() {
+        selectedDate = picked;
+        _dateController.text = DateFormat('yyyy-MM-dd').format(picked);
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-
-    return Consumer<PersonalInformationProvider>(    
+    return Consumer<PersonalInformationProvider>(
         builder: (context, value, child) => Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
@@ -20,9 +53,8 @@ class PersonalDetailForm extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: 20.h),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-
                     children: [
-                      Center(                       
+                      Center(
                         child: Text(
                           'Personal Inforrmation',
                           style: TextStyle(
@@ -31,7 +63,6 @@ class PersonalDetailForm extends StatelessWidget {
                       ),
                       SizedBox(height: 20.v),
                       CustomTextFormField(
-                        
                         initialText: value.fullName,
                         onChange: (_value) {
                           value.fullName = _value;
@@ -79,16 +110,25 @@ class PersonalDetailForm extends StatelessWidget {
                             horizontal: 16.h, vertical: 18.v),
                       ),
                       SizedBox(height: 20.v),
-                      CustomTextFormField(
-                        initialText: value.dateOfBirth,
-                        onChange: (_value) {
-                          value.dateOfBirth = _value;
-                        },
-                        hintText: 'Date of Birth',
-                        hintStyle: CustomTextStyles.bodyLargeGray800,
-                        textInputType: TextInputType.datetime,
-                        contentPadding: EdgeInsets.symmetric(
-                            horizontal: 16.h, vertical: 18.v),
+                      TextFormField(
+                        controller: _dateController,
+                        readOnly: true,
+                        onTap: () => _selectDate(context),
+                        decoration: InputDecoration(
+                          hintText: 'Date Of Birth',
+                          labelStyle: CustomTextStyles.bodyLargeGray800,
+                          // Label text style
+                          hintStyle: CustomTextStyles
+                              .bodyLargeGray800, // Hint text style
+                          contentPadding: EdgeInsets.symmetric(
+                              horizontal: 16.h, vertical: 20.v),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20.h),
+                            borderSide: BorderSide.none,
+                          ),
+                          suffixIcon: Icon(Icons.calendar_today),
+                          filled: true,
+                        ),
                       ),
                       SizedBox(height: 20.v),
                       CustomTextFormField(
@@ -103,7 +143,7 @@ class PersonalDetailForm extends StatelessWidget {
                             horizontal: 16.h, vertical: 18.v),
                       ),
                       SizedBox(height: 20.v),
-                      multiDropdownSelector(),
+                      multiDropdownSelector(context),
                       SizedBox(height: 20.v),
                     ],
                   ),
@@ -113,25 +153,11 @@ class PersonalDetailForm extends StatelessWidget {
                   children: [
                     TextButton(
                         onPressed: () {
-                        },
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.skip_previous,
-                              color: Colors.black,
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Text(
-                              'Previous',
-                              style: TextStyle(color: Colors.black),
-                            ),
-                          ],
-                        )),
-                    TextButton(
-                        onPressed: () {
+                          value.dateOfBirth = selectedDate;
                           value.submit_data();
+
+                          Provider.of<CVFormProvider>(context, listen: false)
+                              .form = forms_list[1];
                         },
                         child: Row(
                           children: [
@@ -155,7 +181,9 @@ class PersonalDetailForm extends StatelessWidget {
             )));
   }
 
-  Widget multiDropdownSelector() {
+  Widget multiDropdownSelector(BuildContext context) {
+    PersonalInformationProvider provider =
+        Provider.of<PersonalInformationProvider>(context, listen: false);
     MultiSelectController _controller = MultiSelectController();
     Map<String, String> languages =
         LocaleNamesLocalizationsDelegate.nativeLocaleNames;
@@ -167,7 +195,13 @@ class PersonalDetailForm extends StatelessWidget {
       borderRadius: 20.h,
       controller: _controller,
       onOptionSelected: (options) {
-        debugPrint(options.toString());
+        print("SELECTED ...${options}");
+
+        options.forEach((element) {
+          if (!provider.selectedLanguages.contains(element.label)) {
+            provider.selectedLanguages.add(element.label);
+          }
+        });
       },
       options: items,
       maxItems: 5,

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:smart_cv/apis/auth_apis/login.dart';
+import 'package:smart_cv/local_storage/auth_storage.dart';
 
 class SignInDataProvider extends ChangeNotifier {
   String _email = "";
@@ -16,9 +18,14 @@ class SignInDataProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  String submit_data() {
-    print("Email is..........  : ${this._email}");
-    print("Password is.........  : ${this._password}");
-    return "Success Message ...";
+  Future<bool> submit_data(BuildContext context) async {
+    String? token = await loginUser(this._email, this._password, context);
+    if (token == null) {
+      return false;
+    } else {
+      await storeToken(token);
+      await getToken();
+      return false;
+    }
   }
 }

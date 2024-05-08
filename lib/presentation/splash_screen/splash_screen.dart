@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:smart_cv/apis/auth_apis/user_apis.dart';
 import 'package:smart_cv/core/app_export.dart';
+import 'package:smart_cv/local_storage/auth_storage.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -8,23 +10,28 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-
-
 class _SplashScreenState extends State<SplashScreen> {
+  void checkUser() {
+    Future.delayed(const Duration(seconds: 2), () async {
+      String? token = await getToken();
 
-void checkUser(){
- Future.delayed(const Duration(seconds: 2), () {
+      if (token != null) {
+        Navigator.pushNamed(context, AppRoutes.homeScreen);
+      } else {
+        print("USER NOT AUTHERIZED");
         Navigator.pushNamed(context, AppRoutes.signinScreen);
-      });
-}
+      }
+    });
+  }
+
   @override
   void initState() {
     checkUser();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-    
     return SafeArea(
       child: Scaffold(
         backgroundColor: appTheme.gray100,

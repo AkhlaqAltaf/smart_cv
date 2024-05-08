@@ -1,0 +1,40 @@
+import 'dart:convert';
+
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:smart_cv/apis/urls/urls.dart';
+import 'package:smart_cv/local_storage/auth_storage.dart';
+
+import 'package:smart_cv/widgets/error_displayer.dart';
+
+Future<String?> loginUser(
+    String email, String password, BuildContext context) async {
+  try {
+    final response = await http.post(Uri.parse(login_url),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(
+          <String, dynamic>{
+            'email': email,
+            'password': password,
+          },
+        ));
+    var decodedData = await jsonDecode(response.body);
+
+    if (response.statusCode == 200) {
+      String token = decodedData['token'];
+      await storeToken(token);
+      displayError(context, "success", "SUCCESSFULLY SIGNED-IN");
+
+      return decodedData.toString();
+    } else {
+      displayError(context, 'error', "SOME ERROR ${response.statusCode}");
+
+      return null;
+    }
+  } catch (e) {
+    displayError(context, "error", e.toString());
+    return null;
+  }
+}

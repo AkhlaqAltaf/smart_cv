@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_cv/core/app_export.dart';
+import 'package:smart_cv/form/cv_resume/list_forms.dart';
+import 'package:smart_cv/provider/cv_form_provider.dart';
 import 'package:smart_cv/provider/data_providers/cv_resume_data_provider/skills_data_provider.dart';
 import 'package:smart_cv/widgets/custom_text_form_field.dart';
 
@@ -42,7 +44,8 @@ class _SkillFormState extends State<SkillForm> {
                               Expanded(
                                 child: CustomTextFormField(
                                   onChange: (_value) {
-                                    value.name![index] = _value;
+                                    print("Changing..");
+                                    value.name.insert(index, _value);
                                   },
                                   hintText: 'Full Name',
                                   hintStyle: CustomTextStyles.bodyLargeGray800,
@@ -77,6 +80,9 @@ class _SkillFormState extends State<SkillForm> {
                         children: [
                           TextButton(
                               onPressed: () {
+                                Provider.of<CVFormProvider>(context,
+                                        listen: false)
+                                    .form = forms_list[3];
                               },
                               child: Row(
                                 children: [
@@ -96,6 +102,11 @@ class _SkillFormState extends State<SkillForm> {
                           TextButton(
                               onPressed: () {
                                 value.submit_data();
+                                Navigator.pushNamed(
+                                    context, AppRoutes.cvResumeDisplay);
+
+                                // Provider.of<CVFormProvider>(context,listen: false).form =
+                                //     forms_list[4];
                               },
                               child: Row(
                                 children: [

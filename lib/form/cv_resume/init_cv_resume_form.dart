@@ -14,6 +14,7 @@ class _InitCVResumeFormState extends State<InitCVResumeForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body: Stack(
         children: [
           SingleChildScrollView(
@@ -30,7 +31,7 @@ class _InitCVResumeFormState extends State<InitCVResumeForm> {
               ),
             ),
           ),
-          CvResumeHeader(),
+          // CvResumeHeader(),
         ],
       ),
     );

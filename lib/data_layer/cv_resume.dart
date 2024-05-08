@@ -1,10 +1,10 @@
 class CvResume {
   static CvResume? instance;
-   PersonalInformation? personalInformation;
-   WorkExperience? workExperience;
-   List<Skill>? skills;
-   Education? education;
-   CertificationAward? certificationAward;
+  PersonalInformation? personalInformation;
+  WorkExperience? workExperience;
+  List<Skill> skills = [];
+  Education? education;
+  CertificationAward? certificationAward;
 
   static CvResume getInstance() {
     if (instance == null) {
@@ -12,11 +12,7 @@ class CvResume {
     }
     return instance!;
   }
-
-
 }
-
-
 
 class PersonalInformation {
   String? fullName;
@@ -25,7 +21,7 @@ class PersonalInformation {
   String? address;
   String? dateOfBirth;
   String? nationality;
-  List<String>? selectedLanguages;
+  List<String>? selectedLanguages = [];
 
   PersonalInformation({
     this.fullName,
@@ -36,6 +32,27 @@ class PersonalInformation {
     this.nationality,
     this.selectedLanguages,
   });
+
+  Map<String, dynamic>? toJson() {
+    return {
+      'full_name': fullName,
+      'email': emailAddress,
+      'phone_number': phoneNumber,
+      'address': address,
+      'date_of_birth': removeTimeFromDate(dateOfBirth!),
+      'nationality': nationality,
+      'languages': languages(selectedLanguages!),
+      'user': 1,
+    };
+  }
+
+  List<Map<String, dynamic>> languages(List<String> languages) {
+    List<Map<String, dynamic>> languageList = [];
+    languages.forEach((language) {
+      languageList.add({'name': language});
+    });
+    return languageList;
+  }
 }
 
 class WorkExperience {
@@ -52,6 +69,16 @@ class WorkExperience {
     this.endDate,
     this.responsibilities,
   );
+
+  Map<String, dynamic>? toJson() {
+    return {
+      'company': company,
+      'position': position,
+      'start_date': removeTimeFromDate(startDate!),
+      'end_date': removeTimeFromDate(endDate!),
+      'responsibilities': responsibilities,
+    };
+  }
 }
 
 class Skill {
@@ -74,16 +101,44 @@ class Education {
     this.location,
     this.graduationYear,
   );
+
+  Map<String, dynamic>? toJson() {
+    return {
+      'name': degree,
+      'field_of_study': fieldOfStudy,
+      'institute': institution,
+      'location': location,
+      'graduation_year': graduationYear.toString(),
+    };
+  }
 }
 
 class CertificationAward {
   String? title;
   String? issuer;
-  DateTime? date;
+  String? date;
 
   CertificationAward(
     this.title,
     this.issuer,
     this.date,
   );
+
+  Map<String, dynamic>? toJson() {
+    return {
+      'name': title,
+      'issuer_name': issuer,
+      'date': removeTimeFromDate(date!)
+    };
+  }
+}
+
+String removeTimeFromDate(String date) {
+  int spaceIndex = date.indexOf(' ');
+
+  if (spaceIndex != -1) {
+    return date.substring(0, spaceIndex);
+  } else {
+    return date;
+  }
 }

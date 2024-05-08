@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_cv/core/app_export.dart';
+import 'package:smart_cv/form/cv_resume/list_forms.dart';
+import 'package:smart_cv/provider/cv_form_provider.dart';
 import 'package:smart_cv/provider/data_providers/cv_resume_data_provider/education_data_provider.dart';
 import 'package:smart_cv/widgets/custom_text_form_field.dart';
 
@@ -94,6 +96,8 @@ class EducationForm extends StatelessWidget {
                         children: [
                           TextButton(
                               onPressed: () {
+                                  Provider.of<CVFormProvider>(context,listen: false).form =
+                              forms_list[0];
                               },
                               child: Row(
                                 children: [
@@ -107,12 +111,15 @@ class EducationForm extends StatelessWidget {
                                   Text(
                                     'Previous',
                                     style: TextStyle(color: Colors.black),
+
                                   ),
                                 ],
                               )),
                           TextButton(
                               onPressed: () {
                                 value.submit_data();
+                                   Provider.of<CVFormProvider>(context,listen: false).form =
+                              forms_list[2];
                               },
                               child: Row(
                                 children: [

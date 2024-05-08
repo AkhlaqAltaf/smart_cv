@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:smart_cv/apis/invitation_card_apis/download_invitation_card.dart';
 import 'package:smart_cv/core/app_export.dart';
+import 'package:smart_cv/local_storage/auth_storage.dart';
 
 Drawer drawer(BuildContext context) {
   return Drawer(
@@ -49,6 +51,7 @@ Drawer drawer(BuildContext context) {
             ),
           ),
           onTap: () {
+            downloadInvitationCard(context, 4);
             // Navigator.pop(context);
           },
         ),
@@ -154,12 +157,8 @@ Drawer drawer(BuildContext context) {
                     TextButton(
                       child: const Text('Logout'),
                       onPressed: () {
-                        // localStorage
-                        //     .clearData()
-                        //     .then((value) => Navigator.pushNamed(
-                        //           context,
-                        //           LoginScreen.routeName,
-                        //         ));
+                        clearData();
+                        Navigator.pushNamed(context, AppRoutes.signinScreen);
                       },
                     ),
                   ],

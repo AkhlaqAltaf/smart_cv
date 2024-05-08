@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_cv/core/app_export.dart';
+import 'package:smart_cv/form/cv_resume/list_forms.dart';
+import 'package:smart_cv/provider/cv_form_provider.dart';
 import 'package:smart_cv/provider/data_providers/cv_resume_data_provider/work_experience.dart';
 import 'package:smart_cv/widgets/custom_text_form_field.dart';
 
@@ -10,7 +13,47 @@ class WorkExperienceForm extends StatefulWidget {
 }
 
 class _WorkExperienceFormState extends State<WorkExperienceForm> {
+  TextEditingController _dateController = TextEditingController();
+  DateTime? selectedDate;
+  TextEditingController _dateController2 = TextEditingController();
+  DateTime? selectedDate2;
 
+  @override
+  void dispose() {
+    _dateController.dispose();
+    _dateController2.dispose();
+    super.dispose();
+  }
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: selectedDate ?? DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime.now(),
+    );
+    if (picked != null && picked != selectedDate) {
+      setState(() {
+        selectedDate = picked;
+        _dateController.text = DateFormat('yyyy-MM-dd').format(picked);
+      });
+    }
+  }
+
+  Future<void> _selectDate2(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: selectedDate2 ?? DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime.now(),
+    );
+    if (picked != null && picked != selectedDate2) {
+      setState(() {
+        selectedDate2 = picked;
+        _dateController2.text = DateFormat('yyyy-MM-dd').format(picked);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,24 +94,48 @@ class _WorkExperienceFormState extends State<WorkExperienceForm> {
                     Row(
                       children: [
                         Expanded(
-                          child: CustomTextFormField(
-                            initialText: value.startDate,
-                            onChange: (_value) {
-                              value.startDate;
-                            },
-                            hintText: 'Start Date',
-                            textInputType: TextInputType.datetime,
+                          child: TextFormField(
+                            controller: _dateController,
+                            readOnly: true,
+                            onTap: () => _selectDate(context),
+                            decoration: InputDecoration(
+                              hintText: 'Start Date',
+                              labelStyle: CustomTextStyles.bodyLargeGray800,
+                              // Label text style
+                              hintStyle: CustomTextStyles
+                                  .bodyLargeGray800, // Hint text style
+                              contentPadding: EdgeInsets.symmetric(
+                                  horizontal: 16.h, vertical: 20.v),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20.h),
+                                borderSide: BorderSide.none,
+                              ),
+                              suffixIcon: Icon(Icons.calendar_today),
+                              filled: true,
+                            ),
                           ),
                         ),
                         SizedBox(width: 10),
                         Expanded(
-                          child: CustomTextFormField(
-                            initialText: value.endDate,
-                            onChange: (_value) {
-                              value.endDate = _value;
-                            },
-                            hintText: 'End Date',
-                            textInputType: TextInputType.datetime,
+                          child: TextFormField(
+                            controller: _dateController2,
+                            readOnly: true,
+                            onTap: () => _selectDate2(context),
+                            decoration: InputDecoration(
+                              hintText: 'Start Date',
+                              labelStyle: CustomTextStyles.bodyLargeGray800,
+                              // Label text style
+                              hintStyle: CustomTextStyles
+                                  .bodyLargeGray800, // Hint text style
+                              contentPadding: EdgeInsets.symmetric(
+                                  horizontal: 16.h, vertical: 20.v),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20.h),
+                                borderSide: BorderSide.none,
+                              ),
+                              suffixIcon: Icon(Icons.calendar_today),
+                              filled: true,
+                            ),
                           ),
                         ),
                       ],
@@ -77,7 +144,7 @@ class _WorkExperienceFormState extends State<WorkExperienceForm> {
                     CustomTextFormField(
                       initialText: value.responsibilities,
                       onChange: (_value) {
-                        value.responsibilities;
+                        value.responsibilities = _value;
                       },
                       hintText: 'Responsibilities',
                       maxLines: 3,
@@ -88,7 +155,9 @@ class _WorkExperienceFormState extends State<WorkExperienceForm> {
                       children: [
                         TextButton(
                             onPressed: () {
-                              value.submit_data();
+                              Provider.of<CVFormProvider>(context,
+                                      listen: false)
+                                  .form = forms_list[1];
                             },
                             child: Row(
                               children: [
@@ -107,6 +176,12 @@ class _WorkExperienceFormState extends State<WorkExperienceForm> {
                             )),
                         TextButton(
                             onPressed: () {
+                              value.startDate = selectedDate;
+                              value.endDate = selectedDate2;
+                              value.submit_data();
+                              Provider.of<CVFormProvider>(context,
+                                      listen: false)
+                                  .form = forms_list[3];
                             },
                             child: Row(
                               children: [
@@ -130,5 +205,4 @@ class _WorkExperienceFormState extends State<WorkExperienceForm> {
               )
             ])));
   }
-
 }

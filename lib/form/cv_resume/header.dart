@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_cv/core/app_export.dart';
 import 'package:smart_cv/form/cv_resume/certification.dart';
+import 'package:smart_cv/form/cv_resume/display.dart';
 import 'package:smart_cv/form/cv_resume/education.dart';
 import 'package:smart_cv/form/cv_resume/personal.dart';
 import 'package:smart_cv/form/cv_resume/skills.dart';
@@ -42,6 +43,7 @@ class CvResumeHeader extends StatelessWidget {
                   _buildNumberedBadge(context, SkillForm(), "Skills"),
                   _buildNumberedBadge(context, CertificationAwardForm(),
                       "Certification And Award"),
+                  _buildNumberedBadge(context, CvResumePage(), "Display"),
                 ],
               ),
             ],
