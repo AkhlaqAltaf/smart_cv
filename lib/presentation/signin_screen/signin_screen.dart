@@ -130,8 +130,9 @@ class SigninScreen extends StatelessWidget {
                               if (isSubmitted) {
                                 passwordController.dispose();
                               }
-
-                              onTapLogIN(context);
+                              if (value.isSuccess) {
+                                onTapLogIN(context);
+                              }
                             }),
                         SizedBox(height: 8.v),
                         Align(

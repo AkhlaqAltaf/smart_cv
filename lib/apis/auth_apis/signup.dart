@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 import 'package:smart_cv/apis/urls/urls.dart';
+import 'package:smart_cv/provider/data_providers/auth_provider/singn_up_provider.dart';
 import 'package:smart_cv/widgets/error_displayer.dart';
 
 Future<bool?> registerUser(String username, String email, String password,
@@ -25,6 +27,7 @@ Future<bool?> registerUser(String username, String email, String password,
       // String token = decodedData['token'];
       // await storeToken(token);
       displayError(context, "success", "USER SUCCESSFULLY REGISTER");
+      Provider.of<SignUpDataProvider>(context, listen: false).isSuccess = true;
 
       return true;
     } else {

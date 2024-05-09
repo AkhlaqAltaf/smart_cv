@@ -1,3 +1,6 @@
+import 'package:flutter/material.dart';
+import 'package:smart_cv/presentation/vistor_screens/cv_resume_screen/cv_resume.dart';
+
 class CvResume {
   static CvResume? instance;
   PersonalInformation? personalInformation;
@@ -5,12 +8,30 @@ class CvResume {
   List<Skill> skills = [];
   Education? education;
   CertificationAward? certificationAward;
+  int? id;
+  String? created_on;
 
+  CvResume.data({
+    this.id,
+    this.created_on,
+    this.personalInformation,
+    this.education,
+  });
+  CvResume.instances();
   static CvResume getInstance() {
     if (instance == null) {
-      instance = CvResume();
+      instance = CvResume.instances();
     }
     return instance!;
+  }
+
+  factory CvResume.fromJson(Map<String, dynamic> json) {
+    return CvResume.data(
+      created_on: json['personal_info']['created_at'],
+      id: json['id'],
+      personalInformation: PersonalInformation.fromJson(json['personal_info']),
+      education: Education.fromJson(json['education']),
+    );
   }
 }
 
@@ -44,6 +65,14 @@ class PersonalInformation {
       'languages': languages(selectedLanguages!),
       'user': 1,
     };
+  }
+
+  factory PersonalInformation.fromJson(Map<String, dynamic> json) {
+    return PersonalInformation(
+        fullName: json['full_name'],
+        phoneNumber: json['phone_number'],
+        address: json['address'],
+        nationality: json['nationality']);
   }
 
   List<Map<String, dynamic>> languages(List<String> languages) {
@@ -92,7 +121,7 @@ class Education {
   String? fieldOfStudy;
   String? institution;
   String? location;
-  int? graduationYear;
+  String? graduationYear;
 
   Education(
     this.degree,
@@ -110,6 +139,11 @@ class Education {
       'location': location,
       'graduation_year': graduationYear.toString(),
     };
+  }
+
+  factory Education.fromJson(Map<String, dynamic> json) {
+    return Education(json['name'], json['field_of_study'], json['institute'],
+        json['location'], json['graduation_year']);
   }
 }
 

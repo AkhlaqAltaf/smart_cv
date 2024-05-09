@@ -8,11 +8,13 @@ class SignUpDataProvider extends ChangeNotifier {
   String _password = "";
   String _password2 = "";
   String _username = "";
+  bool _isSuccess = false;
 
   String get email => _email;
   String get password => _password;
   String get password2 => _password2;
   String get username => _username;
+  bool get isSuccess => this._isSuccess;
 
   set email(String email_) {
     this._email = email_;
@@ -34,11 +36,17 @@ class SignUpDataProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  set isSuccess(bool isSuccess_) {
+    this._isSuccess = isSuccess_;
+    notifyListeners();
+  }
+
   Future<bool?> submit_data(BuildContext context) async {
     print(password);
     print(password2);
 
-    bool? isSub = await registerUser(username, email, password, password2, context);
+    bool? isSub =
+        await registerUser(username, email, password, password2, context);
 
     return isSub;
   }

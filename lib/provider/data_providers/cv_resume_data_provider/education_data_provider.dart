@@ -9,8 +9,8 @@ class EducationDataProvider extends ChangeNotifier {
   int? graduationYear;
 
   void submit_data() {
-    Education education =
-        Education(degree, fieldOfStudy, institution, location, graduationYear);
+    Education education = Education(
+        degree, fieldOfStudy, institution, location, graduationYear.toString());
 
     CvResume.getInstance().education = education;
   }

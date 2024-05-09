@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:smart_cv/apis/invitation_card_apis/download_invitation_card.dart';
+
 import 'package:smart_cv/core/app_export.dart';
 import 'package:smart_cv/local_storage/auth_storage.dart';
 
@@ -51,60 +51,8 @@ Drawer drawer(BuildContext context) {
             ),
           ),
           onTap: () {
-            downloadInvitationCard(context, 4);
+            // downloadInvitationCard(context, 4);
             // Navigator.pop(context);
-          },
-        ),
-        ListTile(
-          leading: const Icon(Icons.document_scanner_sharp, size: 24),
-          title: const Text(
-            'Cv-Resume',
-            style: TextStyle(
-              fontSize: 16,
-            ),
-          ),
-          onTap: () {
-            // Navigator.pop(context);
-            Navigator.pushNamed(context, AppRoutes.cvTemplateScreen);
-          },
-        ),
-        ListTile(
-          leading: const Icon(Icons.insert_invitation, size: 24),
-          title: const Text(
-            'Invitation Card',
-            style: TextStyle(
-              fontSize: 16,
-            ),
-          ),
-          onTap: () {
-            // Navigator.pop(context);
-            Navigator.pushNamed(context, AppRoutes.invitationCardScreen);
-          },
-        ),
-        ListTile(
-          leading: const Icon(Icons.insert_drive_file_outlined, size: 24),
-          title: const Text(
-            'Cover Letter',
-            style: TextStyle(
-              fontSize: 16,
-            ),
-          ),
-          onTap: () {
-            // Navigator.pop(context);
-            Navigator.pushNamed(context, AppRoutes.coverLetterScreen);
-          },
-        ),
-        ListTile(
-          leading: const Icon(Icons.person_2_outlined, size: 24),
-          title: const Text(
-            'Profile',
-            style: TextStyle(
-              fontSize: 16,
-            ),
-          ),
-          onTap: () {
-            // Navigator.pop(context);
-            // Navigator.pushNamed(context, ProfileScreen.routeName);
           },
         ),
         ListTile(

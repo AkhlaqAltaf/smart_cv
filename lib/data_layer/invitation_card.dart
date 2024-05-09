@@ -1,11 +1,31 @@
-class InvitationCard {
-  static InvitationCard? instance;
+class InvitationCardData {
+  static InvitationCardData? instance;
 
   EventDetails? eventDetails;
   HostDetails? hostDetails;
   MessageDetail? messageDetail;
-  static InvitationCard? getInstance() {
-    return instance == null ? InvitationCard() : instance;
+  int? id;
+  String? created_on;
+  static InvitationCardData? getInstance() {
+    return instance == null ? InvitationCardData.instances() : instance;
+  }
+
+  InvitationCardData.instances();
+  InvitationCardData.data(
+    this.eventDetails,
+    this.hostDetails,
+    this.messageDetail,
+    this.id,
+    this.created_on,
+  );
+
+  factory InvitationCardData.fromJson(Map<String, dynamic> json) {
+    return InvitationCardData.data(
+        EventDetails.fromJson(json['event']),
+        HostDetails.fromJson(json['host']),
+        MessageDetail(),
+        json['id'],
+        json['created_on']);
   }
 }
 
@@ -30,6 +50,14 @@ class EventDetails {
       'event_location': eventLocation
     };
   }
+
+  factory EventDetails.fromJson(Map<String, dynamic> json) {
+    return EventDetails(
+        eventDate: json['event_date'],
+        eventLocation: json['event_location'],
+        eventTime: json['event_time'],
+        eventType: json['event_type']);
+  }
 }
 
 class HostDetails {
@@ -52,6 +80,13 @@ class HostDetails {
       'host_phone_number': hostPhoneNumber,
       'host_address': hostAddress
     };
+  }
+
+  factory HostDetails.fromJson(Map<String, dynamic> json) {
+    return HostDetails(
+        hostAddress: json['host_address'],
+        hostEmail: json['host_email'],
+        hostName: json['hostname']);
   }
 }
 

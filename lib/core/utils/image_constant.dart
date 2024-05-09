@@ -22,7 +22,9 @@ class ImageConstant {
   static String imgEllipse12215x119 = '$imagePath/img_ellipse_12_215x119.png';
 
   // home images
-  static String imgSlider1 = '$imagePath/img_slider_1.png';
+  static String imgSlider1 = '$imagePath/img1.jpg';
+  static String imgSlider2 = '$imagePath/img2.jpg';
+  static String imgSlider3 = '$imagePath/img3.jpg';
 
   static String imgRectangle27 = '$imagePath/img_rectangle_27.png';
 
@@ -35,8 +37,6 @@ class ImageConstant {
 
   // cv_template images
   static String imgGroup15 = '$imagePath/img_group_15.png';
-
-  static String imgDownload1 = '$imagePath/img_download_1.png';
 
   // invitation_card images
   static String img5f094aeb0b84433 = '$imagePath/img_5f094aeb0b84433.png';

@@ -182,6 +182,7 @@ class SignupScreen extends StatelessWidget {
                   SizedBox(height: 30.v),
                   GestureDetector(
                     onTap: () {
+                      if (value.isSuccess) {}
                       Navigator.pushNamed(context, AppRoutes.signinScreen);
                     },
                     child: Text(

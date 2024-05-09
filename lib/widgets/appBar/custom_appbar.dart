@@ -17,11 +17,10 @@ class GradientAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
       child: Column(
         children: [
           Container(
-            height: height,
+            height: 80,
             decoration: BoxDecoration(
               gradient: gradient,
             ),
@@ -39,11 +38,11 @@ class GradientAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Size get preferredSize =>
-      Size.fromHeight(height + MediaQuery.of(context).padding.top);
+      Size.fromHeight(height + 20 + MediaQuery.of(context).padding.top);
 }
 
 /// Section Widget
-Widget customAppBar(BuildContext context, String title) {
+PreferredSizeWidget customAppBar(BuildContext context, String title) {
   return GradientAppBar(
     title: Text(title),
     context: context,

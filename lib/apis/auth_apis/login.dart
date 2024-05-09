@@ -2,8 +2,10 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 import 'package:smart_cv/apis/urls/urls.dart';
 import 'package:smart_cv/local_storage/auth_storage.dart';
+import 'package:smart_cv/provider/data_providers/auth_provider/signin_data_provider.dart';
 
 import 'package:smart_cv/widgets/error_displayer.dart';
 
@@ -26,6 +28,7 @@ Future<String?> loginUser(
       String token = decodedData['token'];
       await storeToken(token);
       displayError(context, "success", "SUCCESSFULLY SIGNED-IN");
+      Provider.of<SignInDataProvider>(context, listen: false).isSuccess = true;
 
       return decodedData.toString();
     } else {

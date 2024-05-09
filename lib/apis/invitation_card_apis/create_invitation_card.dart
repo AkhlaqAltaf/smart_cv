@@ -7,7 +7,7 @@ import 'package:smart_cv/widgets/error_displayer.dart';
 
 Future<String?> postInvitationCard(BuildContext context, int user) async {
   final String url = create_cv;
-  InvitationCard? invitation_card = InvitationCard.getInstance();
+  InvitationCardData? invitation_card = InvitationCardData.getInstance();
 
   Map<String, dynamic> data = {
     'host': invitation_card?.hostDetails?.toJson(),
