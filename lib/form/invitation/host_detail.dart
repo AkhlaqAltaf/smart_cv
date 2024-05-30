@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_cv/core/app_export.dart';
+import 'package:smart_cv/form/invitation/form_list.dart';
 import 'package:smart_cv/provider/data_providers/invitation_card_data_provider/host_detail_data_provider.dart';
+import 'package:smart_cv/provider/invitation_card_form_provider.dart';
 import 'package:smart_cv/widgets/custom_text_form_field.dart';
 
 class HostDetailsForm extends StatefulWidget {
@@ -82,6 +84,9 @@ class _HostDetailsFormState extends State<HostDetailsForm> {
                       children: [
                         TextButton(
                             onPressed: () {
+                              Provider.of<InvitatioonCardFormProvider>(context,
+                                      listen: false)
+                                  .form = forms_list[0];
                             },
                             child: Row(
                               children: [
@@ -101,6 +106,10 @@ class _HostDetailsFormState extends State<HostDetailsForm> {
                         TextButton(
                             onPressed: () {
                               value.submit_data();
+
+                              Provider.of<InvitatioonCardFormProvider>(context,
+                                      listen: false)
+                                  .form = forms_list[2];
                             },
                             child: Row(
                               children: [

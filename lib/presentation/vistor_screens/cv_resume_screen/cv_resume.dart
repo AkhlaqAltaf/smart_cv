@@ -23,6 +23,7 @@ class _CVResume extends State<CVResumePage> {
     super.initState();
   }
 
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -36,12 +37,12 @@ class _CVResume extends State<CVResumePage> {
         ),
         appBar: customAppBar(
           context,
-          "COVER LETTER",
+          "CV RESUMES",
         ),
         drawer: drawer(context),
         resizeToAvoidBottomInset: false,
         body: FutureBuilder<List<CvResume>>(
-          future: fetchCVResumes(context, 1),
+          future: fetchCVResumes(context),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(child: CircularProgressIndicator());

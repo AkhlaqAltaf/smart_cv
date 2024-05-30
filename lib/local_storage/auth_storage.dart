@@ -11,15 +11,15 @@ Future<String?> getToken() async {
   return token;
 }
 
-Future<void> storeUser(String user) async {
+Future<void> storeUserId(String userId) async {
   final prefs = await SharedPreferences.getInstance();
-  await prefs.setString('user', user);
+  await prefs.setString('userId', userId);
 }
 
-Future<String?> getUser() async {
+Future<String?> getUserId() async {
   final prefs = await SharedPreferences.getInstance();
-  String? username = await prefs.getString('user');
-  return username;
+  String? userId = await prefs.getString('userId');
+  return userId;
 }
 
 Future<void> clearData() async {

@@ -1,4 +1,4 @@
-const main_url = 'http://192.168.1.13:8000';
+const main_url = 'http://192.168.1.7:8000';
 
 // AUTH URLS
 
@@ -21,7 +21,7 @@ const cv_resumes = '${cv_resume}/cvresumes';
 
 const invitation_card = '${main_url}/api/invitation_card';
 const get_invitation_card_info_url = '${invitation_card}/';
-const create_invitation_card = '${invitation_card}/create';
+const create_invitation_card = '${invitation_card}/';
 const download_invitation = '${invitation_card}/download';
 const get_invitation_cards = '${invitation_card}/invitationcards';
 
@@ -30,4 +30,4 @@ const get_invitation_cards = '${invitation_card}/invitationcards';
 const cover_letter = '${main_url}/api/cover_letter';
 const get_cover_letters = '${cover_letter}/cover-letters';
 const download_cover_letter = '${cover_letter}/download';
-
+const create_cover_letter = '${cover_letter}/';

@@ -19,7 +19,6 @@ Future<bool> fetchUser(String token) async {
       var decoded_data = jsonDecode(response.body);
       String username = decoded_data['username'];
 
-      await storeUser(username);
       return true;
     } else {
       return false;

@@ -26,7 +26,11 @@ Future<String?> loginUser(
 
     if (response.statusCode == 200) {
       String token = decodedData['token'];
+      String userId = decodedData['user_id'].toString();
+
       await storeToken(token);
+      await storeUserId(userId);
+
       displayError(context, "success", "SUCCESSFULLY SIGNED-IN");
       Provider.of<SignInDataProvider>(context, listen: false).isSuccess = true;
 

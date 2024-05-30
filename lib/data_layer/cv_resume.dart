@@ -43,16 +43,17 @@ class PersonalInformation {
   String? dateOfBirth;
   String? nationality;
   List<String>? selectedLanguages = [];
+  int? user;
 
-  PersonalInformation({
-    this.fullName,
-    this.emailAddress,
-    this.phoneNumber,
-    this.address,
-    this.dateOfBirth,
-    this.nationality,
-    this.selectedLanguages,
-  });
+  PersonalInformation(
+      {this.fullName,
+      this.emailAddress,
+      this.phoneNumber,
+      this.address,
+      this.dateOfBirth,
+      this.nationality,
+      this.selectedLanguages,
+      this.user});
 
   Map<String, dynamic>? toJson() {
     return {
@@ -63,7 +64,7 @@ class PersonalInformation {
       'date_of_birth': removeTimeFromDate(dateOfBirth!),
       'nationality': nationality,
       'languages': languages(selectedLanguages!),
-      'user': 1,
+      'user': this.user,
     };
   }
 

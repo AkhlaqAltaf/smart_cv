@@ -23,14 +23,6 @@ class InvitationHeader extends StatelessWidget {
                 backgroundColor: Colors.transparent,
               ),
               SizedBox(height: 9.v),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  _buildNumberedBadge(context, EventDetailsForm(), "Event"),
-                  _buildNumberedBadge(context, HostDetailsForm(), "Host"),
-                  _buildNumberedBadge(context, MessageDetailForm(), "Message"),
-                ],
-              ),
               SizedBox(height: 9.v),
             ],
           ),

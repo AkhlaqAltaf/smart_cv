@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_cv/core/app_export.dart';
+import 'package:smart_cv/form/invitation/form_list.dart';
 import 'package:smart_cv/provider/data_providers/invitation_card_data_provider/message_data_provider.dart';
+import 'package:smart_cv/provider/invitation_card_form_provider.dart';
 import 'package:smart_cv/widgets/custom_text_form_field.dart';
 
 class MessageDetailForm extends StatefulWidget {
@@ -47,7 +49,9 @@ class _MessageDetailFormState extends State<MessageDetailForm> {
                       children: [
                         TextButton(
                             onPressed: () {
-                              // Handle previous button pressed
+                              Provider.of<InvitatioonCardFormProvider>(context,
+                                      listen: false)
+                                  .form = forms_list[1];
                             },
                             child: Row(
                               children: [
@@ -66,7 +70,9 @@ class _MessageDetailFormState extends State<MessageDetailForm> {
                             )),
                         TextButton(
                             onPressed: () {
-                              // Handle previous button pressed
+                              value.submit_data();
+                              Navigator.of(context)
+                                  .pushNamed(AppRoutes.invitationCardDisplay);
                             },
                             child: Row(
                               children: [

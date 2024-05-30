@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:smart_cv/form/cover_letter/cover_letter_form.dart';
 import 'package:smart_cv/form/cv_resume/display.dart';
 import 'package:smart_cv/form/cv_resume/init_cv_resume_form.dart';
+import 'package:smart_cv/form/invitation/display.dart';
 import 'package:smart_cv/form/invitation/init_invitation_card_froms.dart';
 import 'package:smart_cv/presentation/vistor_screens/cover_letter/cover_letter.dart';
 import 'package:smart_cv/presentation/vistor_screens/cv_resume_screen/cv_resume.dart';
@@ -44,6 +46,9 @@ class AppRoutes {
   static const String coverLetter = '/coverLetter';
   static const String invitationCard = '/invitationCard';
   static const String cvResume = '/cvResume';
+  static const String coverLetterForm = '/coverLetterForm';
+
+  static const String invitationCardDisplay = '/displatInvitationCard';
 
   static Map<String, WidgetBuilder> routes = {
     splashScreen: (context) => SplashScreen(),
@@ -59,9 +64,12 @@ class AppRoutes {
     invitationCardCreate: (context) => InitInvitationCardForm(),
     cvResumeDisplay: (context) => CvResumePage(),
 
+    invitationCardDisplay: (context) => InvitationCardDisplay(),
+
     // VISITING SCREENS
     coverLetter: (context) => CoverLetter(),
     cvResume: (context) => CVResumePage(),
-    invitationCard: (context) => InvitationCard()
+    invitationCard: (context) => InvitationCard(),
+    coverLetterForm: (context) => CoverLetterForm(),
   };
 }

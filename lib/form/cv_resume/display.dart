@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smart_cv/apis/cv_resume_apis/create_cv_resume.dart';
 import 'package:smart_cv/apis/cv_resume_apis/download_cv.dart';
 import 'package:smart_cv/core/app_export.dart';
 import 'package:smart_cv/data_layer/cv_resume.dart';
@@ -97,7 +98,9 @@ class _CvResumePageState extends State<CvResumePage> {
                 onPressed: () async {
                   // Handle submit button press
                   // String? response = await postDataToServer();
-                  await downloadCvResume(context, 1);
+
+                  await postDataToServer(context);
+                  Navigator.of(context).pushNamed(AppRoutes.cvResume);
                 },
                 text: 'Submit Data',
                 margin: EdgeInsets.only(left: 19.h, right: 22.h),

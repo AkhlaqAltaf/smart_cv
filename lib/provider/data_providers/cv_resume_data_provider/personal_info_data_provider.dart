@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smart_cv/data_layer/cv_resume.dart';
+import 'package:smart_cv/local_storage/auth_storage.dart';
 
 class PersonalInformationProvider extends ChangeNotifier {
   String? fullName;
@@ -10,10 +11,12 @@ class PersonalInformationProvider extends ChangeNotifier {
   String? nationality;
   List<String> selectedLanguages = [];
 
-  void submit_data() {
+  void submit_data() async {
     print("LANGUAGES<<<<");
     print(selectedLanguages);
+    String? user = await getUserId();
     CvResume cvResume = CvResume.getInstance();
+
     PersonalInformation personalInformation = PersonalInformation(
         fullName: fullName,
         address: address,
@@ -21,7 +24,9 @@ class PersonalInformationProvider extends ChangeNotifier {
         dateOfBirth: dateOfBirth.toString(),
         nationality: nationality,
         phoneNumber: phoneNumber,
-        selectedLanguages: selectedLanguages);
+        selectedLanguages: selectedLanguages,
+        user: int.parse(user!)
+        );
 
     cvResume.personalInformation = personalInformation;
   }

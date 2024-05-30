@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:smart_cv/provider/cv_form_provider.dart';
 import 'package:smart_cv/provider/data_providers/auth_provider/signin_data_provider.dart';
 import 'package:smart_cv/provider/data_providers/auth_provider/singn_up_provider.dart';
+import 'package:smart_cv/provider/data_providers/cover_letter_provider/cover_letter_form_provider.dart';
 import 'package:smart_cv/provider/data_providers/cv_resume_data_provider/certification_data_provider.dart';
 import 'package:smart_cv/provider/data_providers/cv_resume_data_provider/education_data_provider.dart';
 import 'package:smart_cv/provider/data_providers/cv_resume_data_provider/personal_info_data_provider.dart';
@@ -64,6 +65,8 @@ class MyApp extends StatelessWidget {
 
             // LOADER PROVIDER
             ChangeNotifierProvider(create: (_) => LoaderProvider()),
+            // COVER LETTER PROVIDER
+            ChangeNotifierProvider(create: (_) => CoverLetterProvider()),
           ],
           builder: (context, child) {
             return MaterialApp(

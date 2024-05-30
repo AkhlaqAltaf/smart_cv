@@ -12,6 +12,8 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   void checkUser() {
+
+    
     Future.delayed(const Duration(seconds: 2), () async {
       String? token = await getToken();
 

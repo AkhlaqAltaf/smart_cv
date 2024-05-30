@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_cv/core/app_export.dart';
+import 'package:smart_cv/form/invitation/form_list.dart';
 import 'package:smart_cv/provider/data_providers/invitation_card_data_provider/events_detail_data_provider.dart';
+import 'package:smart_cv/provider/invitation_card_form_provider.dart';
 import 'package:smart_cv/widgets/custom_text_form_field.dart';
 
 class EventDetailsForm extends StatefulWidget {
@@ -10,6 +13,29 @@ class EventDetailsForm extends StatefulWidget {
 }
 
 class _EventDetailsFormState extends State<EventDetailsForm> {
+  TextEditingController _dateController = TextEditingController();
+  DateTime? selectedDate;
+  @override
+  void dispose() {
+    _dateController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: selectedDate ?? DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime(2050),
+    );
+    if (picked != null && picked != selectedDate) {
+      setState(() {
+        selectedDate = picked;
+        _dateController.text = DateFormat('yyyy-MM-dd').format(picked);
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<EventDetailsDataProvider>(
@@ -49,7 +75,7 @@ class _EventDetailsFormState extends State<EventDetailsForm> {
                       },
                       hintText: 'Enter Event Date',
                       hintStyle: CustomTextStyles.bodyLargeGray800,
-                      textInputType: TextInputType.datetime,
+                      textInputType: TextInputType.text,
                       contentPadding: EdgeInsets.symmetric(
                           horizontal: 16.h, vertical: 18.v),
                     ),
@@ -61,7 +87,7 @@ class _EventDetailsFormState extends State<EventDetailsForm> {
                       },
                       hintText: 'Enter Event Time',
                       hintStyle: CustomTextStyles.bodyLargeGray800,
-                      textInputType: TextInputType.datetime,
+                      textInputType: TextInputType.text,
                       contentPadding: EdgeInsets.symmetric(
                           horizontal: 16.h, vertical: 18.v),
                     ),
@@ -82,26 +108,10 @@ class _EventDetailsFormState extends State<EventDetailsForm> {
                       children: [
                         TextButton(
                             onPressed: () {
-                              // Handle previous button pressed
-                            },
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.skip_previous,
-                                  color: Colors.black,
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Text(
-                                  'Previous',
-                                  style: TextStyle(color: Colors.black),
-                                ),
-                              ],
-                            )),
-                        TextButton(
-                            onPressed: () {
                               value.submit_data();
+                              Provider.of<InvitatioonCardFormProvider>(context,
+                                      listen: false)
+                                  .form = forms_list[1];
                             },
                             child: Row(
                               children: [

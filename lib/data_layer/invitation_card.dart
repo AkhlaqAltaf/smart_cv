@@ -6,11 +6,15 @@ class InvitationCardData {
   MessageDetail? messageDetail;
   int? id;
   String? created_on;
+  InvitationCardData.instances();
+
   static InvitationCardData? getInstance() {
-    return instance == null ? InvitationCardData.instances() : instance;
+    if (instance == null) {
+      instance = InvitationCardData.instances();
+    }
+    return instance;
   }
 
-  InvitationCardData.instances();
   InvitationCardData.data(
     this.eventDetails,
     this.hostDetails,

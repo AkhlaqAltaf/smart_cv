@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_cv/apis/invitation_card_apis/download_invitation_card.dart';
 import 'package:smart_cv/apis/invitation_card_apis/invitation_cards.dart';
+import 'package:smart_cv/core/app_export.dart';
 import 'package:smart_cv/data_layer/invitation_card.dart';
 import 'package:smart_cv/provider/data_providers/loder_provider.dart';
 import 'package:smart_cv/theme/theme_helper.dart';
@@ -27,18 +28,20 @@ class _InvitationCard extends State<InvitationCard> {
     return SafeArea(
       child: Scaffold(
         floatingActionButton: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).pushNamed(AppRoutes.invitationCardCreate);
+          },
           tooltip: 'Select Image',
           child: Icon(Icons.add),
         ),
         appBar: customAppBar(
           context,
-          "COVER LETTER",
+          "INVITATION CARDS",
         ),
         drawer: drawer(context),
         resizeToAvoidBottomInset: false,
         body: FutureBuilder<List<InvitationCardData>>(
-          future: fetchInvitationCards(context, 1),
+          future: fetchInvitationCards(context),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(child: CircularProgressIndicator());

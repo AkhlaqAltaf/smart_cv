@@ -4,9 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:smart_cv/apis/urls/urls.dart';
 import 'package:http/http.dart' as http;
 import 'package:smart_cv/data_layer/invitation_card.dart';
+import 'package:smart_cv/local_storage/auth_storage.dart';
 import 'package:smart_cv/widgets/error_displayer.dart';
 
-Future<List<InvitationCardData>> fetchInvitationCards(BuildContext context, int id) async {
+Future<List<InvitationCardData>> fetchInvitationCards(
+    BuildContext context) async {
+  String? id = await getUserId();
   try {
     final response = await http.get(Uri.parse('${get_invitation_cards}/$id'));
     if (response.statusCode == 200) {
@@ -14,7 +17,8 @@ Future<List<InvitationCardData>> fetchInvitationCards(BuildContext context, int 
       List<InvitationCardData> invitation_cards = [];
       print(jsonResponse.toString());
       jsonResponse.forEach((element) {
-        InvitationCardData invitation_card = InvitationCardData.fromJson(element);
+        InvitationCardData invitation_card =
+            InvitationCardData.fromJson(element);
         invitation_cards.add(invitation_card);
       });
 

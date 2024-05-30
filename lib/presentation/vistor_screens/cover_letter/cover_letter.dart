@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_cv/apis/cover_letters/download_cover_letter.dart';
 import 'package:smart_cv/apis/cover_letters/getCoverLettersApi.dart';
+import 'package:smart_cv/core/app_export.dart';
+import 'package:smart_cv/data_layer/cover_letter.dart';
 import 'package:smart_cv/provider/data_providers/loder_provider.dart';
 import 'package:smart_cv/theme/theme_helper.dart';
 import 'package:smart_cv/widgets/appBar/custom_appbar.dart';
@@ -18,8 +20,13 @@ class _CoverLetterState extends State<CoverLetter> {
   List<CoverLetterData> coverLetters = [];
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+    setState(() {});
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   void fetchData(BuildContext context) async {
@@ -31,7 +38,9 @@ class _CoverLetterState extends State<CoverLetter> {
     return SafeArea(
       child: Scaffold(
         floatingActionButton: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).pushNamed(AppRoutes.coverLetterForm);
+          },
           tooltip: 'Select Image',
           child: Icon(Icons.add),
         ),
