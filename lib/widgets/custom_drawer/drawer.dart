@@ -51,24 +51,9 @@ Drawer drawer(BuildContext context) {
             ),
           ),
           onTap: () {
-            // downloadInvitationCard(context, 4);
-            // Navigator.pop(context);
-          },
-        ),
-        ListTile(
-          leading: const Icon(
-            Icons.list,
-            size: 24,
-          ),
-          title: const Text(
-            'Settings',
-            style: TextStyle(
-              fontSize: 16,
-            ),
-          ),
-          onTap: () {
-            // Navigator.pop(context);
-            // Navigator.pushNamed(context, SettingsScreen.routeName);
+            Navigator.pop(context);
+
+            Navigator.of(context).pushNamed(AppRoutes.homeScreen);
           },
         ),
         ListTile(

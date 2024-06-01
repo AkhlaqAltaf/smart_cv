@@ -67,7 +67,10 @@ class _InvitationCardDisplay extends State<InvitationCardDisplay> {
                   // Handle submit button press
                   // String? response = await postDataToServer();
 
-                  await postInvitationCard(context);
+                  bool isSuccess = await postInvitationCard(context);
+                  if (isSuccess) {
+                    Navigator.of(context).pushNamed(AppRoutes.invitationCard);
+                  }
                 },
                 text: 'Submit Data',
                 margin: EdgeInsets.only(left: 19.h, right: 22.h),

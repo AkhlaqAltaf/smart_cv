@@ -6,7 +6,7 @@ import 'package:smart_cv/data_layer/invitation_card.dart';
 import 'package:smart_cv/local_storage/auth_storage.dart';
 import 'package:smart_cv/widgets/error_displayer.dart';
 
-Future<String?> postInvitationCard(BuildContext context) async {
+Future<bool> postInvitationCard(BuildContext context) async {
   final String url = create_invitation_card;
   InvitationCardData? invitation_card = InvitationCardData.getInstance();
   print("INVITATION CARD${invitation_card?.eventDetails!.toJson()}");
@@ -38,16 +38,16 @@ Future<String?> postInvitationCard(BuildContext context) async {
     );
 
     // Check if the request was successful
-    if (response.statusCode == 200) {
-      String id = jsonDecode(response.body)['id'];
-      displayError(context, "success", 'SUCCESSFULLY UPLOADED ${id}');
+    if (response.statusCode < 200) {
+      displayError(context, "success", 'SUCCESSFULLY UPLOADED ');
 
-      return id;
+      return true;
     } else {
       displayError(context, "error", '${response.reasonPhrase}');
-      return null;
+      return false;
     }
   } catch (e) {
     displayError(context, 'error', e.toString());
+    return false;
   }
 }

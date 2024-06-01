@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_cv/provider/cv_form_provider.dart';
 import 'package:smart_cv/widgets/appBar/custom_appbar.dart';
+import 'package:smart_cv/widgets/custom_drawer/drawer.dart';
 
 class InitCVResumeForm extends StatefulWidget {
   const InitCVResumeForm({Key? key}) : super(key: key);
@@ -14,7 +15,11 @@ class _InitCVResumeFormState extends State<InitCVResumeForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppBar(context, "CREATE SMART CV"),
+      drawer: drawer(context),
+      appBar: customAppBar(
+        context,
+        "CV RESUME FORM",
+      ),
       body: Stack(
         children: [
           SingleChildScrollView(

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:smart_cv/core/app_export.dart';
 import 'package:smart_cv/provider/data_providers/cover_letter_provider/cover_letter_form_provider.dart';
+import 'package:smart_cv/widgets/appBar/custom_appbar.dart';
+import 'package:smart_cv/widgets/custom_drawer/drawer.dart';
 import 'package:smart_cv/widgets/custom_elevated_button.dart';
 import 'package:smart_cv/widgets/custom_text_form_field.dart';
 
@@ -11,20 +14,15 @@ class CoverLetterForm extends StatefulWidget {
 
 class _CoverLetterFormState extends State<CoverLetterForm> {
   final _formKey = GlobalKey<FormState>();
-  String? jobTitle;
-  String? companyName;
-  String? jobDescription;
-  String? name;
-  String? phoneNumber;
-  String? email;
-  String? address;
-  String? experience;
 
+  bool isSuccess = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Cover Letter Form'),
+      drawer: drawer(context),
+      appBar: customAppBar(
+        context,
+        "COVER LETTER FORM",
       ),
       body: Padding(
           padding: EdgeInsets.all(16.0),
@@ -155,13 +153,11 @@ class _CoverLetterFormState extends State<CoverLetterForm> {
                   SizedBox(height: 20),
                   CustomElevatedButton(
                     text: 'Submit',
-                    onPressed: () {
-                      // if (_formKey.currentState!.validate()) {
-                      //   _formKey.currentState!.save();
-                      //   // TODO: Handle the form submission
-                      // }
-
-                      value.onSubmit(context);
+                    onPressed: () async {
+                      isSuccess = await value.onSubmit(context);
+                      if (isSuccess) {
+                        Navigator.of(context).pushNamed(AppRoutes.coverLetter);
+                      }
                     },
                   ),
                 ],

@@ -5,7 +5,7 @@ import 'package:smart_cv/apis/urls/urls.dart';
 import 'package:smart_cv/data_layer/cv_resume.dart';
 import 'package:smart_cv/widgets/error_displayer.dart';
 
-Future<String?> postDataToServer(BuildContext context) async {
+Future<bool> postDataToServer(BuildContext context) async {
   final String url = create_cv;
   CvResume cvResume = CvResume.getInstance();
   print(cvResume.personalInformation?.toJson());
@@ -39,16 +39,16 @@ Future<String?> postDataToServer(BuildContext context) async {
     );
 
     // Check if the request was successful
-    if (response.statusCode == 200) {
-      String id = jsonDecode(response.body)['id'];
-      displayError(context, "success", 'SUCCESSFULLY UPLOADED ${id}');
+    if (response.statusCode < 200) {
+      displayError(context, "success", 'SUCCESSFULLY UPLOADED');
 
-      return id;
+      return true;
     } else {
       displayError(context, "error", '${response.reasonPhrase}');
-      return null;
+      return false;
     }
   } catch (e) {
     displayError(context, 'error', e.toString());
+    return false;
   }
 }

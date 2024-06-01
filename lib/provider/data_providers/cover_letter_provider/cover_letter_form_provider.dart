@@ -60,7 +60,8 @@ class CoverLetterProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void onSubmit(BuildContext context) async {
+  
+  Future<bool> onSubmit(BuildContext context) async {
     int user = 1;
     Fields field = Fields(
         user: user,
@@ -72,6 +73,6 @@ class CoverLetterProvider extends ChangeNotifier {
         email: this._email,
         address: this._address,
         experience: this.experience);
-    await postCoverLetter(context, field);
+   return await postCoverLetter(context, field);
   }
 }

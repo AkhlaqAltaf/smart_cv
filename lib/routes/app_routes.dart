@@ -65,11 +65,11 @@ class AppRoutes {
     cvResumeDisplay: (context) => CvResumePage(),
 
     invitationCardDisplay: (context) => InvitationCardDisplay(),
+    coverLetterForm: (context) => CoverLetterForm(),
 
     // VISITING SCREENS
     coverLetter: (context) => CoverLetter(),
     cvResume: (context) => CVResumePage(),
     invitationCard: (context) => InvitationCard(),
-    coverLetterForm: (context) => CoverLetterForm(),
   };
 }

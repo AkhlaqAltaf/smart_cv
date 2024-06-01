@@ -99,8 +99,11 @@ class _CvResumePageState extends State<CvResumePage> {
                   // Handle submit button press
                   // String? response = await postDataToServer();
 
-                  await postDataToServer(context);
-                  Navigator.of(context).pushNamed(AppRoutes.cvResume);
+                  bool isSuccess = await postDataToServer(context);
+
+                  if (isSuccess) {
+                    Navigator.of(context).pushNamed(AppRoutes.cvResume);
+                  }
                 },
                 text: 'Submit Data',
                 margin: EdgeInsets.only(left: 19.h, right: 22.h),

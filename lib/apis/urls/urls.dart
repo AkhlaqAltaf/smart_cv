@@ -1,4 +1,4 @@
-const main_url = 'http://192.168.1.7:8000';
+const main_url = 'http://192.168.1.18:8000';
 
 // AUTH URLS
 
@@ -31,3 +31,4 @@ const cover_letter = '${main_url}/api/cover_letter';
 const get_cover_letters = '${cover_letter}/cover-letters';
 const download_cover_letter = '${cover_letter}/download';
 const create_cover_letter = '${cover_letter}/';
+const delete_cover_letter = '${cover_letter}';
