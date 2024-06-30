@@ -105,7 +105,7 @@ class _InvitationCard extends State<InvitationCard> {
             child: IconButton(
               icon: Icon(Icons.download_outlined, color: Colors.white),
               onPressed: () {
-                downloadInvitationCard(context, data.id!);
+                downloadInvitationCard(context, data.id!, _selectedOption);
               },
             ),
           ),

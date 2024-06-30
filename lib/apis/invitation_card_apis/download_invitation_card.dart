@@ -7,9 +7,9 @@ import 'package:smart_cv/widgets/error_displayer.dart';
 import 'package:open_filex/open_filex.dart';
 
 Future<void> downloadInvitationCard(
-    BuildContext context, int invitationID) async {
+    BuildContext context, int invitationID,type) async {
   final String baseUrl = invitation_card;
-  final String endpoint = '/download/$invitationID';
+  final String endpoint = '/download/$invitationID/$type';
 
   final Uri url = Uri.parse('$baseUrl$endpoint');
 

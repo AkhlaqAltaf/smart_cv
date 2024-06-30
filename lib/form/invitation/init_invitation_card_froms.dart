@@ -18,16 +18,20 @@ class _InitInvitationCardForm extends State<InitInvitationCardForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: drawer(context),
+
+
       appBar: customAppBar(
         context,
         "INVITATION CARD FORM",
       ),
       body: Stack(
         children: [
+
           SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.only(top: 0.0),
               child: Column(
+                
                 children: [
                   Consumer<InvitatioonCardFormProvider>(
                     builder: (context, value, child) => value.form,
