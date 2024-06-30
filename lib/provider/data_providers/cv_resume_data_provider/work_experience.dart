@@ -5,7 +5,7 @@ class ExperienceDataProvider extends ChangeNotifier {
   String? company;
   String? position;
   DateTime? startDate;
-  DateTime? endDate;
+  String? endDate;
   String? responsibilities;
 
   void submit_data() {

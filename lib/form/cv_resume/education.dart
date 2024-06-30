@@ -82,7 +82,7 @@ class EducationForm extends StatelessWidget {
                       CustomTextFormField(
                         initialText: value.graduationYear,
                         onChange: (_value) {
-                          value.graduationYear = _value as int?;
+                          value.graduationYear = _value;
                         },
                         hintText: 'Graduation Year',
                         hintStyle: CustomTextStyles.bodyLargeGray800,
@@ -96,8 +96,9 @@ class EducationForm extends StatelessWidget {
                         children: [
                           TextButton(
                               onPressed: () {
-                                  Provider.of<CVFormProvider>(context,listen: false).form =
-                              forms_list[0];
+                                Provider.of<CVFormProvider>(context,
+                                        listen: false)
+                                    .form = forms_list[0];
                               },
                               child: Row(
                                 children: [
@@ -111,15 +112,15 @@ class EducationForm extends StatelessWidget {
                                   Text(
                                     'Previous',
                                     style: TextStyle(color: Colors.black),
-
                                   ),
                                 ],
                               )),
                           TextButton(
                               onPressed: () {
                                 value.submit_data();
-                                   Provider.of<CVFormProvider>(context,listen: false).form =
-                              forms_list[2];
+                                Provider.of<CVFormProvider>(context,
+                                        listen: false)
+                                    .form = forms_list[2];
                               },
                               child: Row(
                                 children: [

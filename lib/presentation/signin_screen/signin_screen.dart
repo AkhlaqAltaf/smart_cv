@@ -166,7 +166,7 @@ class SigninScreen extends StatelessWidget {
   /// Section Widget
   Widget _buildWelcome(BuildContext context) {
     return Padding(
-        padding: EdgeInsets.only(left: 11.h),
+        padding: EdgeInsets.only(left: 0),
         child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -176,7 +176,7 @@ class SigninScreen extends StatelessWidget {
                   child: Text("Welcome!", style: theme.textTheme.displaySmall)),
               CustomImageView(
                   imagePath: ImageConstant.imgGroup3,
-                  height: 199.v,
+                  height: 150,
                   width: 192.h,
                   margin: EdgeInsets.only(left: 4.h))
             ]));

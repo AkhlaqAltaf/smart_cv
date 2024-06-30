@@ -44,6 +44,7 @@ class PersonalInformation {
   String? nationality;
   List<String>? selectedLanguages = [];
   int? user;
+  String? imgUrl;
 
   PersonalInformation(
       {this.fullName,
@@ -53,7 +54,8 @@ class PersonalInformation {
       this.dateOfBirth,
       this.nationality,
       this.selectedLanguages,
-      this.user});
+      this.user,
+      this.imgUrl});
 
   Map<String, dynamic>? toJson() {
     return {

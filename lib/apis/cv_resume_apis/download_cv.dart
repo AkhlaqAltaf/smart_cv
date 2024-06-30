@@ -6,9 +6,10 @@ import 'package:smart_cv/apis/urls/urls.dart';
 import 'package:smart_cv/widgets/error_displayer.dart';
 import 'package:open_filex/open_filex.dart';
 
-Future<void> downloadCvResume(BuildContext context, int cvResumeId) async {
+Future<void> downloadCvResume(
+    BuildContext context, int cvResumeId, String type) async {
   final String baseUrl = cv_resume;
-  final String endpoint = '/download/$cvResumeId';
+  final String endpoint = '/download/$cvResumeId/$type';
 
   final Uri url = Uri.parse('$baseUrl$endpoint');
 

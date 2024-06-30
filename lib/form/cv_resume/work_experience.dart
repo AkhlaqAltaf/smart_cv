@@ -91,54 +91,46 @@ class _WorkExperienceFormState extends State<WorkExperienceForm> {
                       hintText: 'Position',
                     ),
                     SizedBox(height: 10),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: TextFormField(
-                            controller: _dateController,
-                            readOnly: true,
-                            onTap: () => _selectDate(context),
-                            decoration: InputDecoration(
-                              hintText: 'Start Date',
-                              labelStyle: CustomTextStyles.bodyLargeGray800,
-                              // Label text style
-                              hintStyle: CustomTextStyles
-                                  .bodyLargeGray800, // Hint text style
-                              contentPadding: EdgeInsets.symmetric(
-                                  horizontal: 16.h, vertical: 20.v),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20.h),
-                                borderSide: BorderSide.none,
-                              ),
-                              suffixIcon: Icon(Icons.calendar_today),
-                              filled: true,
-                            ),
-                          ),
+                    TextFormField(
+                      controller: _dateController,
+                      readOnly: true,
+                      onTap: () => _selectDate(context),
+                      decoration: InputDecoration(
+                        hintText: 'Start Date',
+                        labelStyle: CustomTextStyles.bodyLargeGray800,
+                        // Label text style
+                        hintStyle: CustomTextStyles
+                            .bodyLargeGray800, // Hint text style
+                        contentPadding: EdgeInsets.symmetric(
+                            horizontal: 16.h, vertical: 20.v),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.h),
+                          borderSide: BorderSide.none,
                         ),
-                        SizedBox(width: 10),
-                        Expanded(
-                          child: TextFormField(
-                            controller: _dateController2,
-                            readOnly: true,
-                            onTap: () => _selectDate2(context),
-                            decoration: InputDecoration(
-                              hintText: 'Start Date',
-                              labelStyle: CustomTextStyles.bodyLargeGray800,
-                              // Label text style
-                              hintStyle: CustomTextStyles
-                                  .bodyLargeGray800, // Hint text style
-                              contentPadding: EdgeInsets.symmetric(
-                                  horizontal: 16.h, vertical: 20.v),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20.h),
-                                borderSide: BorderSide.none,
-                              ),
-                              suffixIcon: Icon(Icons.calendar_today),
-                              filled: true,
-                            ),
-                          ),
+                        suffixIcon: Icon(Icons.calendar_today),
+                        filled: true,
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    TextFormField(
+                      onChanged: (_) {
+                        value.endDate = _;
+                      },
+                      decoration: InputDecoration(
+                        hintText: 'End Date (Optioal)',
+
+                        labelStyle: CustomTextStyles.bodyLargeGray800,
+                        // Label text style
+                        hintStyle: CustomTextStyles
+                            .bodyLargeGray800, // Hint text style
+                        contentPadding: EdgeInsets.symmetric(
+                            horizontal: 16.h, vertical: 20.v),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.h),
+                          borderSide: BorderSide.none,
                         ),
-                      ],
+                        filled: true,
+                      ),
                     ),
                     SizedBox(height: 10),
                     CustomTextFormField(
@@ -177,7 +169,6 @@ class _WorkExperienceFormState extends State<WorkExperienceForm> {
                         TextButton(
                             onPressed: () {
                               value.startDate = selectedDate;
-                              value.endDate = selectedDate2;
                               value.submit_data();
                               Provider.of<CVFormProvider>(context,
                                       listen: false)

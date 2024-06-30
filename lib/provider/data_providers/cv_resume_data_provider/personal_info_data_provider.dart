@@ -10,6 +10,7 @@ class PersonalInformationProvider extends ChangeNotifier {
   DateTime? dateOfBirth;
   String? nationality;
   List<String> selectedLanguages = [];
+  String? imgUrl;
 
   void submit_data() async {
     print("LANGUAGES<<<<");
@@ -25,8 +26,8 @@ class PersonalInformationProvider extends ChangeNotifier {
         nationality: nationality,
         phoneNumber: phoneNumber,
         selectedLanguages: selectedLanguages,
-        user: int.parse(user!)
-        );
+        user: int.parse(user!),
+        imgUrl: imgUrl);
 
     cvResume.personalInformation = personalInformation;
   }

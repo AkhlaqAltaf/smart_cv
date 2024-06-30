@@ -106,7 +106,7 @@ class _CVResume extends State<CVResumePage> {
         child: IconButton(
           icon: Icon(Icons.download_outlined, color: Colors.white),
           onPressed: () {
-            downloadCvResume(context, data.id!);
+            downloadCvResume(context, data.id!, _selectedOption!);
           },
         ),
       ),

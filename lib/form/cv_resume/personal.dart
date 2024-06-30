@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_localized_locales/flutter_localized_locales.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:multi_dropdown/multiselect_dropdown.dart';
 import 'package:provider/provider.dart';
@@ -20,10 +23,36 @@ class _PersonalDetailFormState extends State<PersonalDetailForm> {
   TextEditingController _dateController = TextEditingController();
   DateTime? selectedDate;
 
+//
+  late String _imageUrl;
+  File? _image;
+  final _formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+    _imageUrl = '';
+  }
+
   @override
   void dispose() {
     _dateController.dispose();
     super.dispose();
+  }
+
+  bool _inferenceInProgress = false;
+
+  Future<void> getImage() async {
+    if (_inferenceInProgress) return;
+    _inferenceInProgress = true;
+
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      _image = File(pickedFile!.path);
+      _imageUrl = _image!.path;
+    });
+    _inferenceInProgress = false;
   }
 
   Future<void> _selectDate(BuildContext context) async {
@@ -145,6 +174,18 @@ class _PersonalDetailFormState extends State<PersonalDetailForm> {
                       SizedBox(height: 20.v),
                       multiDropdownSelector(context),
                       SizedBox(height: 20.v),
+                      ElevatedButton(
+                        onPressed: () async {
+                          getImage();
+                        },
+                        child: const Text('Choose Image'),
+                      ),
+                      Text(
+                        _imageUrl.isEmpty
+                            ? 'No image selected'
+                            : 'Image: $_imageUrl',
+                      ),
+                      SizedBox(height: 20.v),
                     ],
                   ),
                 ),
@@ -154,6 +195,7 @@ class _PersonalDetailFormState extends State<PersonalDetailForm> {
                     TextButton(
                         onPressed: () {
                           value.dateOfBirth = selectedDate;
+                          value.imgUrl = _imageUrl;
                           value.submit_data();
 
                           Provider.of<CVFormProvider>(context, listen: false)

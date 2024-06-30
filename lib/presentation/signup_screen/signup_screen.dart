@@ -234,9 +234,9 @@ class SignupScreen extends StatelessWidget {
                   child: Text("Welcome!", style: theme.textTheme.displaySmall)),
               CustomImageView(
                   imagePath: ImageConstant.imgGroup3,
-                  height: 199.v,
+                  height: 150,
                   width: 192.h,
-                  margin: EdgeInsets.only(left: 4.h))
+                  margin: EdgeInsets.only(left: 0))
             ]));
   }
 

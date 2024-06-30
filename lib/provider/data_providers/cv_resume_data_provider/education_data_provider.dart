@@ -6,7 +6,7 @@ class EducationDataProvider extends ChangeNotifier {
   String? fieldOfStudy;
   String? institution;
   String? location;
-  int? graduationYear;
+  String? graduationYear;
 
   void submit_data() {
     Education education = Education(
