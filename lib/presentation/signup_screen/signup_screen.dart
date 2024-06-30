@@ -170,7 +170,7 @@ class SignupScreen extends StatelessWidget {
                       if (isSubmitted!) {
                         _password1.dispose();
                         _password2.dispose();
-                        Navigator.pushNamed(context, AppRoutes.homeScreen);
+                        Navigator.pushNamed(context, AppRoutes.signinScreen);
                       }
                     },
                     text: "Sign up",

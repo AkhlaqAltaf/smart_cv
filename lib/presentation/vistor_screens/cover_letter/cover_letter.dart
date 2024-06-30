@@ -116,7 +116,7 @@ class _CoverLetterState extends State<CoverLetter> {
           child: IconButton(
             icon: Icon(Icons.download_outlined, color: Colors.white),
             onPressed: () {
-              downloadCoverLetter(context, data.pk);
+              downloadCoverLetter(context, data.pk, _selectedOption);
             },
           ),
         ),

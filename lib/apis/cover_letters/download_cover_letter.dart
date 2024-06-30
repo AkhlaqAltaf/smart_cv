@@ -6,11 +6,12 @@ import 'package:smart_cv/apis/urls/urls.dart';
 import 'package:smart_cv/widgets/error_displayer.dart';
 import 'package:open_filex/open_filex.dart';
 
-Future<void> downloadCoverLetter(BuildContext context, int cvResumeId) async {
+Future<void> downloadCoverLetter(
+    BuildContext context, int cvResumeId, type) async {
   final String baseUrl = download_cover_letter;
   final String endpoint = '/$cvResumeId';
 
-  final Uri url = Uri.parse('$baseUrl$endpoint');
+  final Uri url = Uri.parse('$baseUrl$endpoint/$type');
 
   try {
     final http.Response response = await http.get(url);

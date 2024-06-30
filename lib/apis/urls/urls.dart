@@ -1,4 +1,4 @@
-const main_url = 'http://192.168.1.24:8000';
+const main_url = 'http://192.168.1.11:8000';
 
 // AUTH URLS
 

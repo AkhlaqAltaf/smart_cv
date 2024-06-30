@@ -24,7 +24,7 @@ Future<bool> postDataToServer(BuildContext context) async {
     'workExperience': cvResume.workExperience?.toJson(),
     'certification': cvResume.certificationAward?.toJson(),
     'skills': cvResume.skills.map((skill) => {'name': skill.name}).toList(),
-    'prifile_picture': {"profile_pic": cvResume.personalInformation?.imgUrl}
+    // 'prifile_picture': {"profile_pic": cvResume.personalInformation?.imgUrl}
   };
 
   String jsonData = jsonEncode(data);
