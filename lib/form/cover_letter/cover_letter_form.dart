@@ -152,13 +152,17 @@ class _CoverLetterFormState extends State<CoverLetterForm> {
                   ),
                   SizedBox(height: 20),
                   CustomElevatedButton(
-                    text: 'Submit',
                     onPressed: () async {
                       isSuccess = await value.onSubmit(context);
                       if (isSuccess) {
                         Navigator.of(context).pushNamed(AppRoutes.coverLetter);
                       }
                     },
+                    text: 'Submit Data',
+                    margin: EdgeInsets.only(left: 19.h, right: 22.h),
+                    buttonStyle: CustomButtonStyles.none,
+                    decoration:
+                        CustomButtonStyles.gradientPrimaryToTealDecoration,
                   ),
                 ],
               ),
