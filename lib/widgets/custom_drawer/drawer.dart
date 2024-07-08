@@ -57,7 +57,7 @@ Drawer drawer(BuildContext context) {
           },
         ),
         ListTile(
-          leading: const Icon(Icons.home, size: 24),
+          leading: const Icon(Icons.collections_bookmark, size: 24),
           title: const Text(
             'CV RESUMES',
             style: TextStyle(
@@ -71,7 +71,7 @@ Drawer drawer(BuildContext context) {
           },
         ),
         ListTile(
-          leading: const Icon(Icons.home, size: 24),
+          leading: const Icon(Icons.insert_invitation, size: 24),
           title: const Text(
             'Invitation Cards',
             style: TextStyle(
@@ -85,7 +85,7 @@ Drawer drawer(BuildContext context) {
           },
         ),
         ListTile(
-          leading: const Icon(Icons.home, size: 24),
+          leading: const Icon(Icons.bookmark_add_rounded, size: 24),
           title: const Text(
             'Cover Letters',
             style: TextStyle(

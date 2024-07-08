@@ -30,7 +30,7 @@ class SignupScreen extends StatelessWidget {
                       style: theme.textTheme.headlineLarge),
                   SizedBox(height: 30.v),
                   Padding(
-                    padding: EdgeInsets.only(left: 10.h, right: 20.h),
+                    padding: EdgeInsets.only(left: 4, right: 20.h),
                     child: TextFormField(
                       onChanged: (_value) {
                         value.username = _value;
@@ -224,7 +224,7 @@ class SignupScreen extends StatelessWidget {
   /// Section Widget
   Widget _buildNinetyFour(BuildContext context) {
     return Padding(
-        padding: EdgeInsets.only(left: 11.h),
+        padding: EdgeInsets.only(left: 3),
         child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
