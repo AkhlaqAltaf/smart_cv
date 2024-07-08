@@ -38,7 +38,7 @@ Future<bool> postInvitationCard(BuildContext context) async {
     );
 
     // Check if the request was successful
-    if (response.statusCode < 200) {
+    if (response.statusCode < 300) {
       displayError(context, "success", 'SUCCESSFULLY UPLOADED ');
 
       return true;

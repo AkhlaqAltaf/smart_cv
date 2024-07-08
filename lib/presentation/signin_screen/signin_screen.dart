@@ -128,7 +128,7 @@ class SigninScreen extends StatelessWidget {
                                   await value.submit_data(context);
 
                               if (isSubmitted) {
-                                passwordController.dispose();
+                                // passwordController.dispose();
                               }
                               if (value.isSuccess) {
                                 onTapLogIN(context);

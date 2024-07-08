@@ -44,5 +44,5 @@ void displayError(BuildContext context, String type, String message) {
 
   overlayState.insert(overlayEntry);
 
-  Future.delayed(const Duration(seconds: 20), () => overlayEntry!.remove());
+  Future.delayed(const Duration(seconds: 3), () => overlayEntry!.remove());
 }

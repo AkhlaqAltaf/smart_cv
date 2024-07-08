@@ -24,7 +24,7 @@ Future<String?> loginUser(
         ));
     var decodedData = await jsonDecode(response.body);
 
-    if (response.statusCode == 200) {
+    if (response.statusCode < 300) {
       String token = decodedData['token'];
       String userId = decodedData['user_id'].toString();
 

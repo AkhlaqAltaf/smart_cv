@@ -18,9 +18,6 @@ class CoverLetter extends StatefulWidget {
 }
 
 class _CoverLetterState extends State<CoverLetter> {
-//OPTIONS
-
-  String? _selectedOption = "Traditional";
   final List<String> _options = [
     'Traditional',
     'Modern',
@@ -32,20 +29,29 @@ class _CoverLetterState extends State<CoverLetter> {
     'Personalized',
   ];
 
-  List<CoverLetterData> coverLetters = [];
+  List<CoverLetterData>? _coverLetters;
+  bool _isLoading = true;
+
   @override
   void initState() {
     super.initState();
-    setState(() {});
+    _fetchCoverLetters();
   }
 
-  @override
-  void dispose() {
-    super.dispose();
+  Future<void> _fetchCoverLetters() async {
+    setState(() {
+      _isLoading = true;
+    });
+    List<CoverLetterData>? coverLetters = await fetchCoverLetters(context, 1);
+    setState(() {
+      _coverLetters = coverLetters;
+      _isLoading = false;
+    });
   }
 
-  void fetchData(BuildContext context) async {
-    coverLetters = await fetchCoverLetters(context, 1);
+  void _deleteCoverLetter(int id) async {
+    await deleteCoverLetter(context, id);
+    _fetchCoverLetters(); // Refresh data after deletion
   }
 
   @override
@@ -65,112 +71,131 @@ class _CoverLetterState extends State<CoverLetter> {
         ),
         drawer: drawer(context),
         resizeToAvoidBottomInset: false,
-        body: FutureBuilder<List<CoverLetterData>>(
-          future: fetchCoverLetters(context, 1),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: CircularProgressIndicator());
-            } else if (snapshot.hasError) {
-              return Center(child: Text('Error: ${snapshot.error}'));
-            } else {
-              List<CoverLetterData>? coverLetters = snapshot.data;
-              if (coverLetters != null) {
-                return ListView.builder(
-                  itemCount: coverLetters.length,
-                  itemBuilder: (context, index) =>
-                      makeCard(coverLetters[index], context),
-                );
-              } else {
-                return Center(child: Text('No cover letters available'));
-              }
-            }
-          },
-        ),
+        body: _isLoading
+            ? Center(child: CircularProgressIndicator())
+            : _coverLetters == null || _coverLetters!.isEmpty
+                ? Center(child: Text('No cover letters available'))
+                : ListView.builder(
+                    itemCount: _coverLetters!.length,
+                    itemBuilder: (context, index) =>
+                        makeCard(_coverLetters![index], context),
+                  ),
       ),
     );
   }
 
-  Card makeCard(CoverLetterData data, BuildContext context) => Card(
-        elevation: 8.0,
-        margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
-        child: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                theme.colorScheme.primary,
-                appTheme.blueGray500C6,
-              ],
-            ),
+  Card makeCard(CoverLetterData data, BuildContext context) {
+    return Card(
+      elevation: 8.0,
+      margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
+      child: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              theme.colorScheme.primary,
+              appTheme.blueGray500C6,
+            ],
           ),
-          child: makeListTile(data, context),
         ),
-      );
+        child: _CoverLetterListTile(
+            data: data, options: _options, deleteCallback: _deleteCoverLetter),
+      ),
+    );
+  }
+}
 
-  ListTile makeListTile(CoverLetterData data, BuildContext context) => ListTile(
-        contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-        leading: Container(
-          padding: EdgeInsets.only(right: 12.0),
-          decoration: new BoxDecoration(
-              border: new Border(
-                  right: new BorderSide(width: 1.0, color: Colors.white24))),
-          child: IconButton(
-            icon: Icon(Icons.download_outlined, color: Colors.white),
-            onPressed: () {
-              downloadCoverLetter(context, data.pk, _selectedOption);
+class _CoverLetterListTile extends StatefulWidget {
+  final CoverLetterData data;
+  final List<String> options;
+  final Function(int) deleteCallback;
+
+  const _CoverLetterListTile({
+    Key? key,
+    required this.data,
+    required this.options,
+    required this.deleteCallback,
+  }) : super(key: key);
+
+  @override
+  __CoverLetterListTileState createState() => __CoverLetterListTileState();
+}
+
+class __CoverLetterListTileState extends State<_CoverLetterListTile> {
+  String? _selectedOption = "Traditional";
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+      leading: Container(
+        padding: EdgeInsets.only(right: 12.0),
+        decoration: new BoxDecoration(
+          border: new Border(
+            right: new BorderSide(width: 1.0, color: Colors.white24),
+          ),
+        ),
+        child: IconButton(
+          icon: Icon(Icons.download_outlined, color: Colors.white),
+          onPressed: () {
+            if (_selectedOption != null) {
+              downloadCoverLetter(context, widget.data.pk, _selectedOption!);
+            }
+          },
+        ),
+      ),
+      title: Column(
+        children: [
+          DropdownButton<String>(
+            value: _selectedOption,
+            hint: Text('Select A Type'),
+            items: widget.options.map((String option) {
+              return DropdownMenuItem<String>(
+                value: option,
+                child: Text(option),
+              );
+            }).toList(),
+            onChanged: (String? newValue) {
+              setState(() {
+                _selectedOption = newValue;
+              });
             },
           ),
-        ),
-        title: Column(
-          children: [
-            DropdownButton<String>(
-              value: _selectedOption,
-              hint: Text('Select A Type'),
-              items: _options.map((String option) {
-                return DropdownMenuItem<String>(
-                  value: option,
-                  child: Text(option),
-                );
-              }).toList(),
-              onChanged: (String? newValue) {
-                setState(() {
-                  _selectedOption = newValue;
-                });
-              },
+          Text(
+            widget.data.fields.job_title,
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          ),
+        ],
+      ),
+      subtitle: Row(
+        children: <Widget>[
+          Expanded(
+            flex: 1,
+            child: Container(
+              child: LinearProgressIndicator(
+                backgroundColor: Color.fromRGBO(209, 224, 224, 0.2),
+                value: double.tryParse(widget.data.pk.toString()),
+                valueColor: AlwaysStoppedAnimation(Colors.green),
+              ),
             ),
-            Text(
-              data.fields.job_title,
-              style:
-                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          ),
+          Expanded(
+            flex: 4,
+            child: Padding(
+              padding: EdgeInsets.only(left: 10.0),
+              child: Text(
+                "ID : ${widget.data.pk.toString()}",
+                style: TextStyle(color: Colors.white),
+              ),
             ),
-          ],
-        ),
-        subtitle: Row(
-          children: <Widget>[
-            Expanded(
-                flex: 1,
-                child: Container(
-                  child: LinearProgressIndicator(
-                      backgroundColor: Color.fromRGBO(209, 224, 224, 0.2),
-                      value: double.tryParse(data.pk.toString()),
-                      valueColor: AlwaysStoppedAnimation(Colors.green)),
-                )),
-            Expanded(
-              flex: 4,
-              child: Padding(
-                  padding: EdgeInsets.only(left: 10.0),
-                  child: Text("ID : ${data.pk.toString()}",
-                      style: TextStyle(color: Colors.white))),
-            )
-          ],
-        ),
-        trailing: IconButton(
-          onPressed: () {
-            setState(() {
-              deleteCoverLetter(context, data.pk);
-            });
-          },
-          icon:
-              Icon(Icons.delete_forever_sharp, color: Colors.white, size: 30.0),
-        ),
-      );
+          ),
+        ],
+      ),
+      trailing: IconButton(
+        onPressed: () async {
+          widget.deleteCallback(widget.data.pk);
+        },
+        icon: Icon(Icons.delete_forever_sharp, color: Colors.white, size: 30.0),
+      ),
+    );
+  }
 }

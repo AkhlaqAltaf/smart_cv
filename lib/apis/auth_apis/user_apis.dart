@@ -15,7 +15,7 @@ Future<bool> fetchUser(String token) async {
       },
     );
 
-    if (response.statusCode == 200) {
+    if (response.statusCode < 300) {
       var decoded_data = jsonDecode(response.body);
       String username = decoded_data['username'];
 

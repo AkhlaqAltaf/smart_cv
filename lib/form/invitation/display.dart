@@ -4,6 +4,8 @@ import 'package:smart_cv/apis/invitation_card_apis/create_invitation_card.dart';
 import 'package:smart_cv/core/app_export.dart';
 import 'package:smart_cv/data_layer/invitation_card.dart';
 import 'package:smart_cv/theme/custom_button_style.dart';
+import 'package:smart_cv/widgets/appBar/custom_appbar.dart';
+import 'package:smart_cv/widgets/custom_drawer/drawer.dart';
 import 'package:smart_cv/widgets/custom_elevated_button.dart';
 
 class InvitationCardDisplay extends StatefulWidget {
@@ -19,9 +21,8 @@ class _InvitationCardDisplay extends State<InvitationCardDisplay> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-        ),
+        appBar: customAppBar(context, "INVITATION CARD DATA VALIDATION"),
+        drawer: drawer(context),
         body: SingleChildScrollView(
             child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

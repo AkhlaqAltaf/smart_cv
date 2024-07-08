@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smart_cv/apis/auth_apis/user_apis.dart';
+import 'package:smart_cv/apis/urls/urls.dart';
 import 'package:smart_cv/core/app_export.dart';
 import 'package:smart_cv/local_storage/auth_storage.dart';
 
@@ -12,8 +13,6 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   void checkUser() {
-
-    
     Future.delayed(const Duration(seconds: 2), () async {
       String? token = await getToken();
 
@@ -28,8 +27,10 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
-    checkUser();
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _showEditDialog();
+    });
   }
 
   @override
@@ -83,6 +84,49 @@ class _SplashScreenState extends State<SplashScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  void _showEditDialog() {
+    final TextEditingController url = TextEditingController();
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          backgroundColor: Colors.white,
+          title: Text('Edit Product'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(height: 10),
+              TextField(
+                controller: url,
+                decoration: InputDecoration(
+                    labelText: 'ipv4 Address', hintText: "192.168.1.1"),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () async {
+                try {
+                  String ipv4 = url.text;
+                  main_url = 'http://${ipv4}:8000';
+
+                  Navigator.of(context).pop();
+                  checkUser();
+                } catch (e) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Error updating product: $e')),
+                  );
+                }
+              },
+              child: Text('Save'),
+            ),
+          ],
+        );
+      },
     );
   }
 }

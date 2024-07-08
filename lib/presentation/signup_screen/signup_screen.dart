@@ -168,8 +168,8 @@ class SignupScreen extends StatelessWidget {
                       bool? isSubmitted = await value.submit_data(context);
 
                       if (isSubmitted!) {
-                        _password1.dispose();
-                        _password2.dispose();
+                        // _password1.dispose();
+                        // _password2.dispose();
                         Navigator.pushNamed(context, AppRoutes.signinScreen);
                       }
                     },

@@ -23,7 +23,7 @@ Future<bool?> registerUser(String username, String email, String password,
         ));
     var decodedData = await jsonDecode(response.body);
 
-    if (response.statusCode == 200) {
+    if (response.statusCode < 300) {
       // String token = decodedData['token'];
       // await storeToken(token);
       displayError(context, "success", "USER SUCCESSFULLY REGISTER");

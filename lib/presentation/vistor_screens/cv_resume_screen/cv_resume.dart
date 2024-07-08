@@ -12,10 +12,10 @@ class CVResumePage extends StatefulWidget {
   const CVResumePage({Key? key}) : super(key: key);
 
   @override
-  State<CVResumePage> createState() => _CVResume();
+  State<CVResumePage> createState() => _CVResumeState();
 }
 
-class _CVResume extends State<CVResumePage> {
+class _CVResumeState extends State<CVResumePage> {
   // OPTIONS
   String? _selectedOption;
   final List<String> _options = [
@@ -71,7 +71,7 @@ class _CVResume extends State<CVResumePage> {
         body: _isLoading
             ? Center(child: CircularProgressIndicator())
             : _cvResumes == null || _cvResumes!.isEmpty
-                ? Center(child: Text('No cover letters available'))
+                ? Center(child: Text('No CV resumes available'))
                 : ListView.builder(
                     itemCount: _cvResumes!.length,
                     itemBuilder: (context, index) =>
@@ -84,7 +84,7 @@ class _CVResume extends State<CVResumePage> {
   Card makeCard(CvResume data, BuildContext context) {
     return Card(
       elevation: 8.0,
-      margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
+      margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
       child: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -94,24 +94,51 @@ class _CVResume extends State<CVResumePage> {
             ],
           ),
         ),
-        child: makeListTile(data, context),
+        child: _CvResumeListTile(
+          data: data,
+          options: _options,
+          deleteCallback: _deleteCvResume,
+        ),
       ),
     );
   }
+}
 
-  ListTile makeListTile(CvResume data, BuildContext context) {
+class _CvResumeListTile extends StatefulWidget {
+  final CvResume data;
+  final List<String> options;
+  final Function(int) deleteCallback;
+
+  const _CvResumeListTile({
+    Key? key,
+    required this.data,
+    required this.options,
+    required this.deleteCallback,
+  }) : super(key: key);
+
+  @override
+  __CvResumeListTileState createState() => __CvResumeListTileState();
+}
+
+class __CvResumeListTileState extends State<_CvResumeListTile> {
+  String? _selectedOption;
+
+  @override
+  Widget build(BuildContext context) {
     return ListTile(
       contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
       leading: Container(
         padding: EdgeInsets.only(right: 12.0),
-        decoration: new BoxDecoration(
-            border: new Border(
-                right: new BorderSide(width: 1.0, color: Colors.white24))),
+        decoration: BoxDecoration(
+          border: Border(
+            right: BorderSide(width: 1.0, color: Colors.white24),
+          ),
+        ),
         child: IconButton(
           icon: Icon(Icons.download_outlined, color: Colors.white),
           onPressed: () {
             if (_selectedOption != null) {
-              downloadCvResume(context, data.id!, _selectedOption!);
+              downloadCvResume(context, widget.data.id!, _selectedOption!);
             }
           },
         ),
@@ -121,7 +148,7 @@ class _CVResume extends State<CVResumePage> {
           DropdownButton<String>(
             value: _selectedOption,
             hint: Text('Select A Type'),
-            items: _options.map((String option) {
+            items: widget.options.map((String option) {
               return DropdownMenuItem<String>(
                 value: option,
                 child: Text(option),
@@ -134,7 +161,7 @@ class _CVResume extends State<CVResumePage> {
             },
           ),
           Text(
-            data.personalInformation!.fullName!,
+            widget.data.personalInformation!.fullName!,
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
           ),
         ],
@@ -142,25 +169,31 @@ class _CVResume extends State<CVResumePage> {
       subtitle: Row(
         children: <Widget>[
           Expanded(
-              flex: 1,
-              child: Container(
-                // tag: 'hero',
-                child: LinearProgressIndicator(
-                    backgroundColor: Color.fromRGBO(209, 224, 224, 0.2),
-                    value: double.tryParse(data.id.toString()),
-                    valueColor: AlwaysStoppedAnimation(Colors.green)),
-              )),
+            flex: 1,
+            child: Container(
+              child: LinearProgressIndicator(
+                backgroundColor: Color.fromRGBO(209, 224, 224, 0.2),
+                value: double.tryParse(widget.data.id.toString()),
+                valueColor: AlwaysStoppedAnimation(Colors.green),
+              ),
+            ),
+          ),
           Expanded(
             flex: 4,
             child: Padding(
-                padding: EdgeInsets.only(left: 10.0),
-                child: Text("ID : ${data.id}",
-                    style: TextStyle(color: Colors.white))),
+              padding: EdgeInsets.only(left: 10.0),
+              child: Text(
+                "ID : ${widget.data.id}",
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
           ),
         ],
       ),
       trailing: IconButton(
-        onPressed: () => _deleteCvResume(data.id!),
+        onPressed: () async {
+          await widget.deleteCallback(widget.data.id!);
+        },
         icon: Icon(Icons.delete_forever_sharp, color: Colors.white, size: 30.0),
       ),
     );
