@@ -57,6 +57,48 @@ Drawer drawer(BuildContext context) {
           },
         ),
         ListTile(
+          leading: const Icon(Icons.home, size: 24),
+          title: const Text(
+            'CV RESUMES',
+            style: TextStyle(
+              fontSize: 16,
+            ),
+          ),
+          onTap: () {
+            Navigator.pop(context);
+
+            Navigator.of(context).pushNamed(AppRoutes.cvResume);
+          },
+        ),
+        ListTile(
+          leading: const Icon(Icons.home, size: 24),
+          title: const Text(
+            'Invitation Cards',
+            style: TextStyle(
+              fontSize: 16,
+            ),
+          ),
+          onTap: () {
+            Navigator.pop(context);
+
+            Navigator.of(context).pushNamed(AppRoutes.invitationCard);
+          },
+        ),
+        ListTile(
+          leading: const Icon(Icons.home, size: 24),
+          title: const Text(
+            'Cover Letters',
+            style: TextStyle(
+              fontSize: 16,
+            ),
+          ),
+          onTap: () {
+            Navigator.pop(context);
+
+            Navigator.of(context).pushNamed(AppRoutes.coverLetter);
+          },
+        ),
+        ListTile(
           leading: const RotationTransition(
             turns: AlwaysStoppedAnimation(180 / 360),
             child: Icon(
