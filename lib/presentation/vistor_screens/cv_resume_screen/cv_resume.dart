@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:smart_cv/apis/cv_resume_apis/delete_cv.dart';
 import 'package:smart_cv/apis/cv_resume_apis/download_cv.dart';
 import 'package:smart_cv/apis/cv_resume_apis/get_cv_resumes.dart';
 import 'package:smart_cv/core/app_export.dart';
 import 'package:smart_cv/data_layer/cv_resume.dart';
-import 'package:smart_cv/provider/data_providers/loder_provider.dart';
 import 'package:smart_cv/theme/theme_helper.dart';
 import 'package:smart_cv/widgets/appBar/custom_appbar.dart';
 import 'package:smart_cv/widgets/custom_drawer/drawer.dart';
@@ -18,8 +16,7 @@ class CVResumePage extends StatefulWidget {
 }
 
 class _CVResume extends State<CVResumePage> {
-  //OPTIONS
-
+  // OPTIONS
   String? _selectedOption;
   final List<String> _options = [
     'Basic',
@@ -32,10 +29,26 @@ class _CVResume extends State<CVResumePage> {
     'Academic',
   ];
 
+  List<CvResume>? _cvResumes;
+  bool _isLoading = true;
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+    _fetchCVResumes();
+  }
+
+  Future<void> _fetchCVResumes() async {
+    List<CvResume>? cvResumes = await fetchCVResumes(context);
+    setState(() {
+      _cvResumes = cvResumes;
+      _isLoading = false;
+    });
+  }
+
+  void _deleteCvResume(int id) async {
+    await deleteCvResume(context, id);
+    _fetchCVResumes(); // Refresh data after deletion
   }
 
   @override
@@ -55,48 +68,39 @@ class _CVResume extends State<CVResumePage> {
         ),
         drawer: drawer(context),
         resizeToAvoidBottomInset: false,
-        body: FutureBuilder<List<CvResume>>(
-          future: fetchCVResumes(context),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: CircularProgressIndicator());
-            } else if (snapshot.hasError) {
-              return Center(child: Text('Error: ${snapshot.error}'));
-            } else {
-              List<CvResume>? cv_resumes = snapshot.data;
-              if (cv_resumes != null) {
-                return ListView.builder(
-                  itemCount: cv_resumes.length,
-                  itemBuilder: (context, index) =>
-                      makeCard(snapshot.data![index], context),
-                );
-              } else {
-                return Center(child: Text('No cover letters available'));
-              }
-            }
-          },
-        ),
+        body: _isLoading
+            ? Center(child: CircularProgressIndicator())
+            : _cvResumes == null || _cvResumes!.isEmpty
+                ? Center(child: Text('No cover letters available'))
+                : ListView.builder(
+                    itemCount: _cvResumes!.length,
+                    itemBuilder: (context, index) =>
+                        makeCard(_cvResumes![index], context),
+                  ),
       ),
     );
   }
 
-  Card makeCard(CvResume data, BuildContext context) => Card(
-        elevation: 8.0,
-        margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
-        child: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                theme.colorScheme.primary,
-                appTheme.blueGray500C6,
-              ],
-            ),
+  Card makeCard(CvResume data, BuildContext context) {
+    return Card(
+      elevation: 8.0,
+      margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
+      child: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              theme.colorScheme.primary,
+              appTheme.blueGray500C6,
+            ],
           ),
-          child: makeListTile(data, context),
         ),
-      );
+        child: makeListTile(data, context),
+      ),
+    );
+  }
 
-  ListTile makeListTile(CvResume data, BuildContext context) => ListTile(
+  ListTile makeListTile(CvResume data, BuildContext context) {
+    return ListTile(
       contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
       leading: Container(
         padding: EdgeInsets.only(right: 12.0),
@@ -106,7 +110,9 @@ class _CVResume extends State<CVResumePage> {
         child: IconButton(
           icon: Icon(Icons.download_outlined, color: Colors.white),
           onPressed: () {
-            downloadCvResume(context, data.id!, _selectedOption!);
+            if (_selectedOption != null) {
+              downloadCvResume(context, data.id!, _selectedOption!);
+            }
           },
         ),
       ),
@@ -154,11 +160,9 @@ class _CVResume extends State<CVResumePage> {
         ],
       ),
       trailing: IconButton(
-        onPressed: () {
-          setState(() async {
-            await deleteCvResume(context, data.id!);
-          });
-        },
+        onPressed: () => _deleteCvResume(data.id!),
         icon: Icon(Icons.delete_forever_sharp, color: Colors.white, size: 30.0),
-      ));
+      ),
+    );
+  }
 }

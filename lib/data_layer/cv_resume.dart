@@ -10,6 +10,7 @@ class CvResume {
   CertificationAward? certificationAward;
   int? id;
   String? created_on;
+  String download = "";
 
   CvResume.data({
     this.id,

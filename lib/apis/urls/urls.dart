@@ -1,4 +1,4 @@
-const main_url = 'http://192.168.1.11:8000';
+const main_url = 'http://192.168.0.103:8000';
 
 // AUTH URLS
 
@@ -13,9 +13,10 @@ const get_user_url = '${auth}/get_user/';
 
 const cv_resume = '${main_url}/api/cv_resume';
 const get_cv_info_url = '${cv_resume}/';
-const create_cv = '${cv_resume}/create';
+const create_cv = '${cv_resume}/';
 const download_cv = '${cv_resume}/download/';
 const cv_resumes = '${cv_resume}/cvresumes';
+const upload_image = '${cv_resume}/upload_image';
 
 // INVITATION CARD URLS
 

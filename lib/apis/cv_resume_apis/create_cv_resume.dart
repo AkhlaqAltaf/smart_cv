@@ -8,23 +8,18 @@ import 'package:smart_cv/widgets/error_displayer.dart';
 Future<bool> postDataToServer(BuildContext context) async {
   final String url = create_cv;
   CvResume cvResume = CvResume.getInstance();
-  print(cvResume.personalInformation?.toJson());
-  print(
-    cvResume.education?.toJson(),
-  );
-  print(
-    cvResume.workExperience?.toJson(),
-  );
-  print(cvResume.certificationAward?.toJson());
-  print(cvResume.skills.map((skill) => {'name': skill.name}).toList());
+
+  print("IMAGE FILE ${cvResume.personalInformation!.imgUrl}");
+  int id = await _uploadImage(cvResume.personalInformation!.imgUrl, context);
 
   Map<String, dynamic> data = {
     'personal_info': cvResume.personalInformation?.toJson(),
     'education': cvResume.education?.toJson(),
-    'workExperience': cvResume.workExperience?.toJson(),
+    'work_experience': cvResume.workExperience?.toJson(),
     'certification': cvResume.certificationAward?.toJson(),
     'skills': cvResume.skills.map((skill) => {'name': skill.name}).toList(),
-    // 'prifile_picture': {"profile_pic": cvResume.personalInformation?.imgUrl}
+    'body': "",
+    'prifile_picture': id > 0 ? id : null
   };
 
   String jsonData = jsonEncode(data);
@@ -40,7 +35,7 @@ Future<bool> postDataToServer(BuildContext context) async {
     );
 
     // Check if the request was successful
-    if (response.statusCode < 200) {
+    if (response.statusCode < 300) {
       displayError(context, "success", 'SUCCESSFULLY UPLOADED');
 
       return true;
@@ -51,5 +46,36 @@ Future<bool> postDataToServer(BuildContext context) async {
   } catch (e) {
     displayError(context, 'error', e.toString());
     return false;
+  }
+}
+
+Future<int> _uploadImage(image, BuildContext context) async {
+  if (image == null) {
+    displayError(context, "error", "NO IMAGE FILE");
+    0;
+  }
+
+  var uri = Uri.parse(upload_image);
+  var request = http.MultipartRequest("POST", uri);
+
+  // Attach the file in the request
+  request.files.add(await http.MultipartFile.fromPath(
+    'profile_pic', // This should match the field name expected by the Django API
+    image,
+    filename: image,
+  ));
+
+  var response = await request.send();
+
+  if (response.statusCode < 300) {
+    var responseData = await http.Response.fromStream(response);
+    var decodedData = jsonDecode(responseData.body);
+
+    displayError(context, "success", "decoded: $decodedData");
+    return decodedData['id'];
+  } else {
+    displayError(context, 'error', "STATUS CODE ERROR: ${response.statusCode}");
+    return 0;
+    print("Image upload failed with status code ${response.statusCode}");
   }
 }

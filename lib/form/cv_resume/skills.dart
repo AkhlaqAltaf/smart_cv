@@ -12,10 +12,9 @@ class SkillForm extends StatefulWidget {
 }
 
 class _SkillFormState extends State<SkillForm> {
-  List<TextEditingController> controllers = [TextEditingController()];
-
   @override
   Widget build(BuildContext context) {
+    var skillProvider = Provider.of<SkillDataProvider>(context);
     return Consumer<SkillDataProvider>(
         builder: (context, value, child) => Padding(
             padding: const EdgeInsets.all(8.0),
@@ -37,17 +36,14 @@ class _SkillFormState extends State<SkillForm> {
                       ListView.builder(
                         shrinkWrap: true,
                         physics: NeverScrollableScrollPhysics(),
-                        itemCount: controllers.length,
+                        itemCount: skillProvider.controllers.length,
                         itemBuilder: (BuildContext context, int index) {
                           return Row(
                             children: [
                               Expanded(
                                 child: CustomTextFormField(
-                                  onChange: (_value) {
-                                    print("Changing..");
-                                    value.name.insert(index, _value);
-                                  },
-                                  hintText: 'Full Name',
+                                  controller: skillProvider.controllers[index],
+                                  hintText: 'Skill Name',
                                   hintStyle: CustomTextStyles.bodyLargeGray800,
                                   textInputType: TextInputType.text,
                                   contentPadding: EdgeInsets.symmetric(
@@ -58,7 +54,7 @@ class _SkillFormState extends State<SkillForm> {
                                 icon: Icon(Icons.remove),
                                 onPressed: () {
                                   setState(() {
-                                    controllers.removeAt(index);
+                                    skillProvider.removeSkill(index);
                                   });
                                 },
                               ),
@@ -70,7 +66,7 @@ class _SkillFormState extends State<SkillForm> {
                       ElevatedButton(
                         onPressed: () {
                           setState(() {
-                            controllers.add(TextEditingController());
+                            skillProvider.addSkill();
                           });
                         },
                         child: Text('Add Skill'),
@@ -101,12 +97,9 @@ class _SkillFormState extends State<SkillForm> {
                               )),
                           TextButton(
                               onPressed: () {
-                                value.submit_data();
+                                skillProvider.updateSkills();
                                 Navigator.pushNamed(
                                     context, AppRoutes.cvResumeDisplay);
-
-                                // Provider.of<CVFormProvider>(context,listen: false).form =
-                                //     forms_list[4];
                               },
                               child: Row(
                                 children: [
