@@ -408,9 +408,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget sliderPic(int index, BuildContext context) {
     List<String> text = [
-      "WE ARE PROVIDING EXPENSIVE APPS",
-      "WE ARE PROVIDING CLEAN CODE ARCHITECTURES",
-      "WE ARE PROVIDING AI SOLUTION"
+      "OUR SYSTEM BULT ON HITROGENIUS ARCHITECTURE ( CLIENT , SERVER)",
+      "SYSTEM IS FOR FAST CREATION OF CV , RESUMES , INVITATION CARDS , COVER LETTERS",
+      "AI ENHANCED APPLICATION"
     ];
     return Stack(
       alignment: Alignment.center,
