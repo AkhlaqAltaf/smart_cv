@@ -30,7 +30,7 @@ class SignupScreen extends StatelessWidget {
                       style: theme.textTheme.headlineLarge),
                   SizedBox(height: 30.v),
                   Padding(
-                    padding: EdgeInsets.only(left: 21.h, right: 20.h),
+                    padding: EdgeInsets.only(left: 10.h, right: 20.h),
                     child: TextFormField(
                       onChanged: (_value) {
                         value.username = _value;
