@@ -68,6 +68,7 @@ Drawer drawer(BuildContext context) {
             Navigator.pop(context);
 
             Navigator.of(context).pushNamed(AppRoutes.cvResume);
+            
           },
         ),
         ListTile(

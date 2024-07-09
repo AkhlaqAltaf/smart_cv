@@ -95,7 +95,7 @@ class _SplashScreenState extends State<SplashScreen> {
       builder: (context) {
         return AlertDialog(
           backgroundColor: Colors.white,
-          title: Text('Edit Product'),
+          title: Text('Edit Ipv4 Address'),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -112,7 +112,11 @@ class _SplashScreenState extends State<SplashScreen> {
               onPressed: () async {
                 try {
                   String ipv4 = url.text;
-                  main_url = 'http://${ipv4}:8000';
+                  if (ipv4.contains("http")) {
+                    main_url = ipv4;
+                  } else {
+                    main_url = 'http://${ipv4}:8000';
+                  }
 
                   Navigator.of(context).pop();
                   checkUser();
